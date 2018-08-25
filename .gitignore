@@ -8,7 +8,6 @@
 /classes
 .classpath
 .project
-*.gradle
 *.bat
 gradlew
 local.properties

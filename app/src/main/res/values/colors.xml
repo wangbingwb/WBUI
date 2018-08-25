@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#00a6e0</color>
+    <color name="colorPrimary">#00a6e0</color>
+    <color name="colorPrimaryDark">#009cd2</color>
+    <color name="colorPrimaryText">#ffffff</color>
+    <color name="colorTitle">#ffffff</color>
+    <color name="colorText">#494949</color>
+    <color name="colorText1">#545454</color>
+    <color name="colorText2">#636363</color>
+    <color name="colorText3">#6e6e6e</color>
+    <color name="colorText4">#878787</color>
+    <color name="colorText5">#a7a7a7</color>
+    <color name="colorLabel">#666666</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorImportant">#ff1418</color>
+    <color name="colorDividerLine1">#60000000</color>
+    <color name="colorDividerLine2">#602e2e2e</color>
+    <color name="colorDividerLine3">#605c5c5c</color>
+    <color name="colorDividerLine4">#60717171</color>
+    <color name="colorDividerLine5">#608b8b8b</color>
+    <color name="colorDividerLine6">#60b1b1b1</color>
+
+    <color name="colorFromLabel">#404040</color>
+    <color name="colorFromInput">#ffffffff</color>
+    <color name="colorFromInputActive">#f4f4f4</color>
+    <color name="colorFromInputFocus">#f4f4f4</color>
+</resources>
