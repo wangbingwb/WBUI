@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -42,6 +43,15 @@ public class HomeFragment extends BaseFragment {
         topbar.addLeftBackImageButton();
         topbar.setTitle("组件");
         gridMenu.setAdapter(new Adapter());
+        gridMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Menu menu = data.get(i);
+                if ("TakePhoto".endsWith(menu.getTitile())){
+                    startFragment(new TakePhotoFragment());
+                }
+            }
+        });
     }
 
     private void initMenu() {
@@ -55,6 +65,13 @@ public class HomeFragment extends BaseFragment {
         {
             Menu menu = new Menu();
             menu.setTitile("Dialog");
+            menu.setIcon(R.mipmap.icon_grid_dialog);
+            data.add(menu);
+        }
+
+        {
+            Menu menu = new Menu();
+            menu.setTitile("TakePhoto");
             menu.setIcon(R.mipmap.icon_grid_dialog);
             data.add(menu);
         }
