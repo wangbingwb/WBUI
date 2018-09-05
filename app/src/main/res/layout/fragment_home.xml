@@ -13,11 +13,10 @@
 
     <xyz.wbsite.wbsiteui.witget.WBUIGridView
         android:id="@+id/gridMenu"
-        android:numColumns="3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:fillViewport="true"
-        android:fitsSystemWindows="true">
-    </xyz.wbsite.wbsiteui.witget.WBUIGridView>
+        android:fitsSystemWindows="true"
+        android:numColumns="3"></xyz.wbsite.wbsiteui.witget.WBUIGridView>
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
