@@ -1,9 +1,14 @@
 package xyz.wbsite.wbsiteui;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+
+import java.util.List;
 
 import xyz.wbsite.wbsiteui.base.BaseActivity;
 import xyz.wbsite.wbsiteui.base.BaseFragment;
@@ -24,7 +29,7 @@ public class WBUIMainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
 
-        startFragment(getFirstFragment());
+
 
 //        if (savedInstanceState == null) {
 //            BaseFragment fragment = getFirstFragment();
@@ -35,6 +40,17 @@ public class WBUIMainActivity extends BaseActivity {
 //                    .addToBackStack(fragment.getClass().getSimpleName())
 //                    .commit();
 //        }
+        AndPermission.with(this).runtime().permission( Manifest.permission.READ_EXTERNAL_STORAGE).onGranted(new Action<List<String>>() {
+            @Override
+            public void onAction(List<String> data) {
+                startFragment(getFirstFragment());
+            }
+        }).onDenied(new Action<List<String>>() {
+            @Override
+            public void onAction(List<String> data) {
+                startFragment(getFirstFragment());
+            }
+        }).start();
     }
 
     private BaseFragment getFirstFragment() {

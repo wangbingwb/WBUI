@@ -63,11 +63,12 @@ public class TakePhotoFragment extends BaseFragment implements TakePhoto.TakeRes
 
     @Override
     protected void initView() {
-        initData();  //设置压缩、裁剪参数
+
 
         takeFromCameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                initData();  //设置压缩、裁剪参数
                 imageUri = getImageCropUri();
                 //拍照并裁剪
                 takePhoto.onPickFromCaptureWithCrop(imageUri, cropOptions);
@@ -117,16 +118,16 @@ public class TakePhotoFragment extends BaseFragment implements TakePhoto.TakeRes
     public void takeSuccess(TResult result) {
         Log.i(TAG, "takeSuccess：" + result.getImage().getCompressPath());
         String compressPath = result.getImage().getCompressPath();
-        File file = new File(compressPath);
-        if (file.exists()){
+        if (compressPath != null){
+            File file = new File(compressPath);
             File file1 = new File(Environment.getExternalStorageDirectory(), "/temp/min_" + file.getName());
             copyFileUsingFileStreams(file,file1);
         }
-        String iconPath = result.getImage().getOriginalPath();
-        //Toast显示图片路径
-        Toast.makeText(getActivity(), "imagePath:" + iconPath, Toast.LENGTH_SHORT).show();
-        //Google Glide库 用于加载图片资源
-        Glide.with(this).load(iconPath).into(imageView);
+//        String iconPath = result.getImage().getOriginalPath();
+//        //Toast显示图片路径
+//        Toast.makeText(getActivity(), "imagePath:" + iconPath, Toast.LENGTH_SHORT).show();
+//        //Google Glide库 用于加载图片资源
+        Glide.with(this).load(compressPath).into(imageView);
     }
 
     private static void copyFileUsingFileStreams(File source, File dest){
@@ -185,9 +186,8 @@ public class TakePhotoFragment extends BaseFragment implements TakePhoto.TakeRes
         //设置裁剪参数
         cropOptions = new CropOptions.Builder().setAspectX(1).setAspectY(1).setWithOwnCrop(false).create();
         //设置压缩参数
-        compressConfig = new CompressConfig.Builder().setMaxSize(500*1024).setMaxPixel(800).create();
+        compressConfig = new CompressConfig.Builder().setMaxSize(500*1024).setMaxPixel(1000).create();
         takePhoto.onEnableCompress(compressConfig, true);  //设置为需要压缩
-        takePhoto.onPickFromGallery();
     }
 
     /**
