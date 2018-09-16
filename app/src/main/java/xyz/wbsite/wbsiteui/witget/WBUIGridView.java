@@ -38,12 +38,12 @@ public class WBUIGridView extends GridView {
         for (int i = 0; i < getChildCount(); i++) {
             View childAt = getChildAt(i);
             localPaint.setShader(new LinearGradient(childAt.getLeft(), childAt.getBottom(), childAt.getRight(), childAt.getBottom(), new int[]{
-                    Color.TRANSPARENT, getResources().getColor(R.color.colorDividerLine6), Color.TRANSPARENT}, null, Shader.TileMode.REPEAT));
+                    Color.TRANSPARENT, getResources().getColor(R.color.colorDividerLine7), Color.TRANSPARENT}, null, Shader.TileMode.REPEAT));
             canvas.drawLine(childAt.getLeft(), childAt.getBottom() - 1, childAt.getRight(), childAt.getBottom() - 1, localPaint);
 
             if ((i + 1) % cols != 0) {
                 localPaint.setShader(new LinearGradient(childAt.getRight(), childAt.getTop(), childAt.getRight(), childAt.getBottom(), new int[]{
-                        Color.TRANSPARENT, getResources().getColor(R.color.colorDividerLine6), Color.TRANSPARENT}, null, Shader.TileMode.MIRROR));
+                        Color.TRANSPARENT, getResources().getColor(R.color.colorDividerLine7), Color.TRANSPARENT}, null, Shader.TileMode.MIRROR));
                 canvas.drawLine(childAt.getRight() - 1, childAt.getTop(), childAt.getRight() - 1, childAt.getBottom(), localPaint);
             }
         }

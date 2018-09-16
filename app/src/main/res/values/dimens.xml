@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="padding_1">1dp</dimen>
+    <dimen name="padding_2">2dp</dimen>
     <dimen name="padding_5">5dp</dimen>
     <dimen name="padding_10">10dp</dimen>
     <dimen name="padding_15">15dp</dimen>
@@ -7,6 +9,8 @@
     <dimen name="padding_30">30dp</dimen>
     <dimen name="padding_40">40dp</dimen>
     <dimen name="padding_50">50dp</dimen>
+    <dimen name="margin_1">1dp</dimen>
+    <dimen name="margin_5">5dp</dimen>
     <dimen name="margin_10">10dp</dimen>
     <dimen name="margin_15">15dp</dimen>
     <dimen name="margin_20">20dp</dimen>
@@ -16,10 +20,10 @@
     <dimen name="form_size">50dp</dimen>
     <dimen name="btn_size">50dp</dimen>
 
-
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="key_height">50.0dip</dimen>
-    <dimen name="keyboard_height">230dip</dimen>
+    <dimen name="font_size12">12sp</dimen>
+    <dimen name="font_size14">14sp</dimen>
+    <dimen name="font_size16">16sp</dimen>
+    <dimen name="font_size18">18sp</dimen>
+    <dimen name="font_size20">20sp</dimen>
 
 </resources>

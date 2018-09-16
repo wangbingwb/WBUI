@@ -5,11 +5,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-/**
- * Created by wangbing on 2018/4/7.
- */
-
-public class TipTextView extends TextView {
+public class TipTextView extends android.support.v7.widget.AppCompatTextView {
     private long time = 3000;
     private String lastValue = "";
     private Runnable runnable = new Runnable() {

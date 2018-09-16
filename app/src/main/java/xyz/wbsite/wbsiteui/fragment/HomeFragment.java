@@ -1,8 +1,5 @@
 package xyz.wbsite.wbsiteui.fragment;
 
-import android.content.Context;
-import android.content.Intent;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +44,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Menu menu = data.get(i);
-                if ("TakePhoto".endsWith(menu.getTitile())){
+                if ("TakePhoto".endsWith(menu.getTitile())) {
                     startFragment(new TakePhotoFragment());
                 }
             }

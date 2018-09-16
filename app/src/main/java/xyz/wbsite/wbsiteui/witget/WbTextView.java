@@ -6,10 +6,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-/**
- * Created by wangbing on 16/6/2.
- */
-public class WbTextView extends TextView {
+public class WbTextView extends android.support.v7.widget.AppCompatTextView {
     private int mOffsetY = 0;
     public Bitmap lastBitmap;
 

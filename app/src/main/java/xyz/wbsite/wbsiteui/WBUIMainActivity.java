@@ -28,33 +28,26 @@ public class WBUIMainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-
-//        if (savedInstanceState == null) {
-//            BaseFragment fragment = getFirstFragment();
-//
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .add(getContextViewId(), fragment, fragment.getClass().getSimpleName())
-//                    .addToBackStack(fragment.getClass().getSimpleName())
-//                    .commit();
-//        }
-        AndPermission.with(this).runtime().permission( Manifest.permission.READ_EXTERNAL_STORAGE).onGranted(new Action<List<String>>() {
+        AndPermission.with(this).runtime().permission(Manifest.permission.READ_EXTERNAL_STORAGE).onGranted(new Action<List<String>>() {
             @Override
             public void onAction(List<String> data) {
-                startFragment(getFirstFragment());
+                startFirstFragment();
             }
         }).onDenied(new Action<List<String>>() {
             @Override
             public void onAction(List<String> data) {
-                startFragment(getFirstFragment());
+                startFirstFragment();
             }
         }).start();
     }
 
-    private BaseFragment getFirstFragment() {
-        return new HomeFragment();
+    private void startFirstFragment() {
+        HomeFragment homeFragment = new HomeFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(getContextViewId(), homeFragment, homeFragment.getClass().getSimpleName())
+                .addToBackStack(homeFragment.getClass().getSimpleName())
+                .commit();
     }
 
     @Override
