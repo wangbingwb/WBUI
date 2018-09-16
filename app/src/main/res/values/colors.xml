@@ -25,4 +25,9 @@
     <color name="colorFromInput">#ffffffff</color>
     <color name="colorFromInputActive">#f4f4f4</color>
     <color name="colorFromInputFocus">#f4f4f4</color>
+
+    <drawable name="key_normal_color">#fcfcfc</drawable>
+    <drawable name="key_selected_color">#cbcfd5</drawable>
+    <drawable name="keyboard_bg_color">#acb3b6</drawable>
+
 </resources>

@@ -48,7 +48,6 @@
         <item name="qmui_topbar_text_btn_text_size">16sp</item>
     </style>
 
-
     <style name="dialogWindowAnim" parent="android:Animation" mce_bogus="1">
         <item name="android:windowEnterAnimation">@anim/slide_in_right</item>
         <item name="android:windowExitAnimation">@anim/slide_out_right</item>
