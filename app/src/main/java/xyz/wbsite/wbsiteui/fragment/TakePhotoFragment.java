@@ -23,6 +23,7 @@ import com.jph.takephoto.model.TakePhotoOptions;
 import com.jph.takephoto.permission.InvokeListener;
 import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
+import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,8 +38,9 @@ import java.nio.file.Path;
 import butterknife.BindView;
 import xyz.wbsite.wbsiteui.R;
 import xyz.wbsite.wbsiteui.base.BaseFragment;
+import xyz.wbsite.wbsiteui.base.BaseTitleFragment;
 
-public class TakePhotoFragment extends BaseFragment implements TakePhoto.TakeResultListener, InvokeListener {
+public class TakePhotoFragment extends BaseTitleFragment implements TakePhoto.TakeResultListener, InvokeListener {
     private static final String TAG = com.jph.takephoto.app.TakePhotoFragment.class.getName();
     private InvokeParam invokeParam;
 
@@ -59,6 +61,11 @@ public class TakePhotoFragment extends BaseFragment implements TakePhoto.TakeRes
     @Override
     protected int getFragmnetLayout() {
         return R.layout.fragment_take_photo;
+    }
+
+    @Override
+    protected void initTitle(QMUITopBarLayout topbar) {
+        topbar.setTitle("拍照");
     }
 
     @Override
@@ -118,10 +125,10 @@ public class TakePhotoFragment extends BaseFragment implements TakePhoto.TakeRes
     public void takeSuccess(TResult result) {
         Log.i(TAG, "takeSuccess：" + result.getImage().getCompressPath());
         String compressPath = result.getImage().getCompressPath();
-        if (compressPath != null){
+        if (compressPath != null) {
             File file = new File(compressPath);
             File file1 = new File(Environment.getExternalStorageDirectory(), "/temp/min_" + file.getName());
-            copyFileUsingFileStreams(file,file1);
+            copyFileUsingFileStreams(file, file1);
         }
 //        String iconPath = result.getImage().getOriginalPath();
 //        //Toast显示图片路径
@@ -130,7 +137,7 @@ public class TakePhotoFragment extends BaseFragment implements TakePhoto.TakeRes
         Glide.with(this).load(compressPath).into(imageView);
     }
 
-    private static void copyFileUsingFileStreams(File source, File dest){
+    private static void copyFileUsingFileStreams(File source, File dest) {
         InputStream input = null;
         OutputStream output = null;
         try {
@@ -186,7 +193,7 @@ public class TakePhotoFragment extends BaseFragment implements TakePhoto.TakeRes
         //设置裁剪参数
         cropOptions = new CropOptions.Builder().setAspectX(1).setAspectY(1).setWithOwnCrop(false).create();
         //设置压缩参数
-        compressConfig = new CompressConfig.Builder().setMaxSize(500*1024).setMaxPixel(1000).create();
+        compressConfig = new CompressConfig.Builder().setMaxSize(500 * 1024).setMaxPixel(1000).create();
         takePhoto.onEnableCompress(compressConfig, true);  //设置为需要压缩
     }
 

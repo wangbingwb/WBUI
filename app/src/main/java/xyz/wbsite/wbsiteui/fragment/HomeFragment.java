@@ -1,13 +1,13 @@
 package xyz.wbsite.wbsiteui.fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
+
+import com.qmuiteam.qmui.widget.QMUITabSegment;
+import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +18,12 @@ import xyz.wbsite.wbsiteui.base.BaseFragment;
 
 public class HomeFragment extends BaseFragment {
 
-    @BindView(R.id.gridMenu)
-    GridView gridMenu;
+    @BindView(R.id.pager)
+    ViewPager pager;
+    @BindView(R.id.tabs)
+    QMUITabSegment tabs;
 
-    private List<Menu> data = new ArrayList<>();
-
-    @Override
-    protected boolean canDragBack() {
-        return false;
-    }
+    private List<Fragment> fragments = new ArrayList<>();
 
     @Override
     protected int getFragmnetLayout() {
@@ -35,108 +32,58 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        initMenu();
-
-        topbar.addLeftBackImageButton();
-        topbar.setTitle("组件");
-        gridMenu.setAdapter(new Adapter());
-        gridMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Menu menu = data.get(i);
-                if ("TakePhoto".endsWith(menu.getTitile())) {
-                    startFragment(new TakePhotoFragment());
-                }
-            }
-        });
+        initTabs();
+        initPagers();
     }
 
-    private void initMenu() {
-        {
-            Menu menu = new Menu();
-            menu.setTitile("Button");
-            menu.setIcon(R.mipmap.icon_grid_button);
-            data.add(menu);
-        }
-
-        {
-            Menu menu = new Menu();
-            menu.setTitile("Dialog");
-            menu.setIcon(R.mipmap.icon_grid_dialog);
-            data.add(menu);
-        }
-
-        {
-            Menu menu = new Menu();
-            menu.setTitile("TakePhoto");
-            menu.setIcon(R.mipmap.icon_grid_dialog);
-            data.add(menu);
-        }
-
+    private void initTabs() {
+        QMUITabSegment.Tab function = new QMUITabSegment.Tab(
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_component),
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_component_selected),
+                "功能", false
+        );
+        QMUITabSegment.Tab function1 = new QMUITabSegment.Tab(
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_component),
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_component_selected),
+                "H5", false
+        );
+        QMUITabSegment.Tab function2 = new QMUITabSegment.Tab(
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_component),
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_component_selected),
+                "关于", false
+        );
+        tabs.addTab(function)
+                .addTab(function1)
+                .addTab(function2);
     }
 
-    private class Adapter extends BaseAdapter {
+    private void initPagers() {
+        fragments.add(new FunctionFragment());
+        fragments.add(new WebViewFragment());
 
-        class ViewHolder {
-            TextView txtTitle;
-            ImageView imgIcon;
+        pager.setAdapter(new BaseFragmentPagerAdapter(getActivity().getSupportFragmentManager()));
+        tabs.setupWithViewPager(pager, false);
+    }
+
+    @Override
+    protected boolean canDragBack() {
+        return false;
+    }
+
+    private class BaseFragmentPagerAdapter extends FragmentPagerAdapter {
+
+        public BaseFragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
         }
 
         @Override
         public int getCount() {
-            return data.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return data.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            View view_;
-            Adapter.ViewHolder holder;
-            Menu item = data.get(i);
-            if (null == view) {
-                view_ = LayoutInflater.from(HomeFragment.this.getContext()).inflate(R.layout.item_grid_menu, null);
-                holder = new Adapter.ViewHolder();
-                holder.txtTitle = (TextView) view_.findViewById(R.id.txtTitle);
-                holder.imgIcon = (ImageView) view_.findViewById(R.id.imgIcon);
-                view_.setTag(holder);
-            } else {
-                view_ = view;
-                holder = (Adapter.ViewHolder) view.getTag();
-            }
-            holder.txtTitle.setText(item.getTitile());
-            holder.imgIcon.setImageResource(item.getIcon());
-            return view_;
-        }
-    }
-
-    private class Menu {
-        private String titile;
-
-        private int icon;
-
-        public String getTitile() {
-            return titile;
-        }
-
-        public void setTitile(String titile) {
-            this.titile = titile;
-        }
-
-        public int getIcon() {
-            return icon;
-        }
-
-        public void setIcon(int icon) {
-            this.icon = icon;
+            return fragments.size();
         }
     }
 }
