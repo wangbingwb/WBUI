@@ -20,9 +20,11 @@
         <item name="qmui_tab_sign_count_view_padding_horizontal">4dp</item>
     </style>
 
-    <style name="DialogTheme" parent="@android:style/Theme.Dialog">
+    <style name="AppTheme.Translucent">
+        <item name="android:windowBackground">@color/qmui_config_color_transparent</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowFrame">@null</item>
     </style>
 
     <style name="QMUI.TopBar">

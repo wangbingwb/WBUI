@@ -16,13 +16,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import xyz.wbsite.wbsiteui.R;
-import xyz.wbsite.wbsiteui.base.BaseFragment;
-import xyz.wbsite.wbsiteui.base.BaseTitleFragment;
+import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
 
-public class FunctionFragment extends BaseTitleFragment {
+public class FunctionFragment extends BaseSPAFragment {
 
     @BindView(R.id.gridMenu)
     GridView gridMenu;
+    @BindView(R.id.topbar)
+    QMUITopBarLayout topbar;
 
     private List<Menu> data = new ArrayList<>();
 
@@ -37,12 +38,10 @@ public class FunctionFragment extends BaseTitleFragment {
     }
 
     @Override
-    protected void initTitle(QMUITopBarLayout topbar) {
-        topbar.setTitle("功能列表");
-    }
-
-    @Override
     protected void initView() {
+
+        topbar.setTitle("功能列表");
+
         initFunctions();
         gridMenu.setAdapter(new Adapter());
         gridMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {

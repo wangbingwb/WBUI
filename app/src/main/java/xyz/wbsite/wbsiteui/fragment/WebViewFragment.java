@@ -8,17 +8,19 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 
 import butterknife.BindView;
 import xyz.wbsite.wbsiteui.R;
-import xyz.wbsite.wbsiteui.base.BaseTitleFragment;
+import xyz.wbsite.wbsiteui.base.BaseFragment;
+import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
 
-public class WebViewFragment extends BaseTitleFragment {
+public class WebViewFragment extends BaseSPAFragment {
 
     @BindView(R.id.webView)
     WebView webView;
@@ -31,16 +33,12 @@ public class WebViewFragment extends BaseTitleFragment {
     }
 
     @Override
-    protected void initTitle(QMUITopBarLayout topbar) {
-        topbar.setTitle("H5");
-    }
-
-    @Override
     protected void initView() {
-        initWebView("http://www.baidu.com");
+        initWebView("http://192.168.1.103:8080/wap/index#/");
     }
 
     private void initWebView(final String url) {
+        QMUIStatusBarHelper.FlymeSetStatusBarLightMode(getActivity().getWindow(), true);
         //android 5.0 之后需要开启浏览器的整体缓存才能截取整个Web
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             WebView.enableSlowWholeDocumentDraw();
@@ -85,6 +83,7 @@ public class WebViewFragment extends BaseTitleFragment {
                 return super.shouldOverrideUrlLoading(view, url);
             }
         });
+        webView.setWebChromeClient(new WebChromeClient());
         webView.loadUrl(url);
 //        webView.addJavascriptInterface(new WebAppInterface(this), "app");
     }

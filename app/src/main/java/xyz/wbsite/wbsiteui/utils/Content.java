@@ -10,4 +10,9 @@ public class Content {
 
     //是否自动登录
     public static String AUTO_LOGIN = "auto_login";
+
+    //文件目录
+    public static String DIR = ".Wpa_JS_TaiXin_SQ_YDJW";
+
+
 }

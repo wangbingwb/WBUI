@@ -2,12 +2,15 @@ package xyz.wbsite.wbsiteui.utils;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -17,14 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataBaseUtils {
-    private String defaultDBName = "db";
+    private String defaultPath = "";
+    private String defaultDBName = "dict.db";
     private SQLiteOpenHelper sqLiteOpenHelper;
     private SQLiteDatabase writableDatabase;
 
     private class SQLiteOpenHelperImpl extends SQLiteOpenHelper {
 
         public SQLiteOpenHelperImpl(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-            super(context, name, factory, version);
+            super(new DatabaseContext(context), name, factory, version);
         }
 
         public SQLiteOpenHelperImpl(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
@@ -60,10 +64,12 @@ public class DataBaseUtils {
     }
 
     public DataBaseUtils(Context context) {
+        File ownCacheDirectory = StorageUtils.getOwnCacheDirectory(context, Content.DIR);
+        defaultPath = ownCacheDirectory.getAbsolutePath();
         sqLiteOpenHelper = new SQLiteOpenHelperImpl(context, defaultDBName, null, 1);
         writableDatabase = sqLiteOpenHelper.getWritableDatabase();
-    }
 
+    }
 
     public <T> List<T> query(T t) {
         return query(t, 0, 0);
@@ -111,7 +117,7 @@ public class DataBaseUtils {
                             if ("".equals(selectionSB.toString())) {
                                 selectionSB.append(" ");
                             } else {
-                                selectionSB.append(" and");
+                                selectionSB.append(" and ");
                             }
                             selectionSB.append(columns[i]).append(" like ?");
                             selectionArgs[where] = o.toString();
@@ -131,7 +137,6 @@ public class DataBaseUtils {
             try {
                 query = writableDatabase.query(table, columns, selectionSB.toString(), selectionArgs, null, null, "", limit);
             } catch (SQLiteException e) {
-                App.getInstance().showToast("数据库查询错误" + e.getMessage());
                 e.printStackTrace();
                 return null;
             }
@@ -272,6 +277,7 @@ public class DataBaseUtils {
         }
     }
 
+
     /**
      * 获取所有数据库对象
      *
@@ -279,7 +285,7 @@ public class DataBaseUtils {
      */
     private List<Class> getObjects() {
         List<Class> list = new ArrayList<>();
-        list.add(Example.class);
+        list.add(DictSyncRecord.class);
         return list;
     }
 
@@ -321,26 +327,65 @@ public class DataBaseUtils {
         }
     }
 
-    public static class Example {
-        @DBField("VARCHAR(20)")
-        private String name;
-        @DBField("VARCHAR(20)")
-        private String password;
+    class DatabaseContext extends ContextWrapper {
 
-        public String getName() {
-            return name;
+        private static final String DEBUG_CONTEXT = "DatabaseContext";
+
+        public DatabaseContext(Context base) {
+            super(base);
         }
 
-        public void setName(String name) {
-            this.name = name;
+        @Override
+        public File getDatabasePath(String name) {
+            if ("".equals(defaultPath)){
+                defaultPath = getApplicationContext().getDatabasePath("dataBaseUtils").getAbsolutePath();
+            }
+
+            File path = new File(defaultPath);
+            if (!path.exists()) {
+                path.mkdirs();
+            }
+
+            File dbfile = new File(path, defaultDBName);
+
+            if (!dbfile.exists()){
+                try {
+                    dbfile.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return dbfile;
         }
 
-        public String getPassword() {
-            return password;
+        @Override
+        public SQLiteDatabase openOrCreateDatabase(String name, int mode,
+                                                   SQLiteDatabase.CursorFactory factory,
+                                                   DatabaseErrorHandler errorHandler) {
+            return openOrCreateDatabase(name, mode, factory);
         }
 
-        public void setPassword(String password) {
-            this.password = password;
+        @Override
+        public SQLiteDatabase openOrCreateDatabase(String name, int mode,
+                                                   SQLiteDatabase.CursorFactory factory) {
+            SQLiteDatabase result = SQLiteDatabase.openOrCreateDatabase(
+                    getDatabasePath(name), null);
+
+            return result;
+        }
+    }
+
+    public static class DictSyncRecord {
+        @DataBaseUtils.DBField("VARCHAR(20)")
+        private String date;
+
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(String date) {
+            this.date = date;
         }
     }
 }

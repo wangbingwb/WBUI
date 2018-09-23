@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import xyz.wbsite.wbsiteui.WBUIApplication;
+
 /**
  * Created by Administrator on 2018/3/11 0011.
  */
@@ -147,8 +149,7 @@ public class SPUtil {
     }
 
     private static SharedPreferences getSharePreferences(String fileName) {
-        return App.getInstance().getSharedPreferences(fileName, Context.MODE_PRIVATE);
-
+        return WBUIApplication.getInstance().getSharedPreferences(fileName, Context.MODE_PRIVATE);
     }
 
     private static SharedPreferences.Editor getEditor(SharedPreferences sharedPreferences) {

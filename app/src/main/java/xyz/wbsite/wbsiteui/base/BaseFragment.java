@@ -1,37 +1,39 @@
 package xyz.wbsite.wbsiteui.base;
 
-import android.view.LayoutInflater;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.qmuiteam.qmui.arch.QMUIFragment;
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+import xyz.wbsite.wbsiteui.WBUIApplication;
+import xyz.wbsite.wbsiteui.utils.AnimationUtil;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+public abstract class BaseFragment extends Fragment {
 
-public abstract class BaseFragment extends QMUIFragment {
-    private Unbinder unbinder;
-
-    @Override
-    protected int backViewInitOffset() {
-        return QMUIDisplayHelper.dp2px(getContext(), 100);
-    }
-
-    protected abstract int getFragmnetLayout();
-
-    @Override
-    protected View onCreateView() {
-        View inflate = LayoutInflater.from(getActivity()).inflate(getFragmnetLayout(), null);
-        unbinder = ButterKnife.bind(this, inflate);
-        initView();
-        return inflate;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-    }
+    protected Handler handler = new Handler();
 
     protected abstract void initView();
+
+
+    /**
+     * 引起注意或聚焦的消息提示
+     *
+     * @param message
+     * @param view
+     */
+    public void showError(String message, View view) {
+        showToast(message);
+        if (view != null) {
+            view.requestFocus();
+            view.startAnimation(AnimationUtil.getShakeAnimation(3));
+        }
+    }
+
+    /**
+     * 展示Toast消息。
+     *
+     * @param message 消息内容
+     */
+    public void showToast(String message) {
+        WBUIApplication.getInstance().showToast(message);
+    }
 }

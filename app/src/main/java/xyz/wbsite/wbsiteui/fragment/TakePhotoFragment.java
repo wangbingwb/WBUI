@@ -19,7 +19,6 @@ import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.InvokeParam;
 import com.jph.takephoto.model.TContextWrap;
 import com.jph.takephoto.model.TResult;
-import com.jph.takephoto.model.TakePhotoOptions;
 import com.jph.takephoto.permission.InvokeListener;
 import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
@@ -32,15 +31,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import butterknife.BindView;
 import xyz.wbsite.wbsiteui.R;
-import xyz.wbsite.wbsiteui.base.BaseFragment;
-import xyz.wbsite.wbsiteui.base.BaseTitleFragment;
+import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
 
-public class TakePhotoFragment extends BaseTitleFragment implements TakePhoto.TakeResultListener, InvokeListener {
+public class TakePhotoFragment extends BaseSPAFragment implements TakePhoto.TakeResultListener, InvokeListener {
     private static final String TAG = com.jph.takephoto.app.TakePhotoFragment.class.getName();
     private InvokeParam invokeParam;
 
@@ -51,6 +47,8 @@ public class TakePhotoFragment extends BaseTitleFragment implements TakePhoto.Ta
     Button takeFromGalleyBtn;
     @BindView(R.id.image_view)
     ImageView imageView;
+    @BindView(R.id.topbar)
+    QMUITopBarLayout topbar;
 
     //TakePhoto
     private TakePhoto takePhoto;
@@ -63,14 +61,11 @@ public class TakePhotoFragment extends BaseTitleFragment implements TakePhoto.Ta
         return R.layout.fragment_take_photo;
     }
 
-    @Override
-    protected void initTitle(QMUITopBarLayout topbar) {
-        topbar.setTitle("拍照");
-    }
+
 
     @Override
     protected void initView() {
-
+        topbar.setTitle("拍照");
 
         takeFromCameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override

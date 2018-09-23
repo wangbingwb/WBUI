@@ -15,8 +15,9 @@ import java.util.List;
 import butterknife.BindView;
 import xyz.wbsite.wbsiteui.R;
 import xyz.wbsite.wbsiteui.base.BaseFragment;
+import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseSPAFragment {
 
     @BindView(R.id.pager)
     ViewPager pager;
