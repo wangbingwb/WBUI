@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class CustomDialog extends Dialog {
-    public CustomDialog(Context context) {
+public class WBUICustomDialog extends Dialog {
+    public WBUICustomDialog(Context context) {
         super(context);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().getDecorView().setPadding(0, 0, 0, 0);

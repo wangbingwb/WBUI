@@ -3,9 +3,8 @@ package xyz.wbsite.wbsiteui.witget;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
-public class TipTextView extends android.support.v7.widget.AppCompatTextView {
+public class WBUITipTextView extends android.support.v7.widget.AppCompatTextView {
     private long time = 3000;
     private String lastValue = "";
     private Runnable runnable = new Runnable() {
@@ -13,22 +12,22 @@ public class TipTextView extends android.support.v7.widget.AppCompatTextView {
         public void run() {
             time-=1000;
             if (time <= 0){
-                TipTextView.this.setText("");
+                WBUITipTextView.this.setText("");
             }else {
                 postDelayed(runnable,1000);
             }
         }
     };
 
-    public TipTextView(Context context) {
+    public WBUITipTextView(Context context) {
         super(context);
     }
 
-    public TipTextView(Context context, @Nullable AttributeSet attrs) {
+    public WBUITipTextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public TipTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public WBUITipTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

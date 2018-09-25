@@ -2,21 +2,22 @@ package xyz.wbsite.wbsiteui.witget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.RelativeLayout;
 
-public class SquareImageView extends android.support.v7.widget.AppCompatImageView {
+public class WBUISquareLayout extends RelativeLayout {
 
     private int weight_width = 1;
     private int weight_height = 1;
 
-    public SquareImageView(Context context, AttributeSet attrs, int defStyle) {
+    public WBUISquareLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    public SquareImageView(Context context, AttributeSet attrs) {
+    public WBUISquareLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public SquareImageView(Context context) {
+    public WBUISquareLayout(Context context) {
         super(context);
     }
 

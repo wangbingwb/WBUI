@@ -30,7 +30,7 @@
     <style name="QMUI.TopBar">
         <item name="qmui_topbar_separator_color">?attr/qmui_config_color_separator</item>
         <item name="qmui_topbar_separator_height">1px</item>
-        <item name="qmui_topbar_bg_color">@color/primary</item>
+        <item name="qmui_topbar_bg_color">@color/colorPrimary</item>
         <item name="qmui_topbar_need_separator">true</item>
         <item name="qmui_topbar_left_back_drawable_id">@drawable/qmui_icon_topbar_back</item>
         <item name="qmui_topbar_title_gravity">center</item>

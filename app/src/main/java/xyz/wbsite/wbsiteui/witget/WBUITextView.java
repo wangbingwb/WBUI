@@ -6,15 +6,15 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-public class WbTextView extends android.support.v7.widget.AppCompatTextView {
+public class WBUITextView extends android.support.v7.widget.AppCompatTextView {
     private int mOffsetY = 0;
     public Bitmap lastBitmap;
 
-    public WbTextView(Context context) {
+    public WBUITextView(Context context) {
         super(context);
     }
 
-    public WbTextView(Context context, AttributeSet attrs) {
+    public WBUITextView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
