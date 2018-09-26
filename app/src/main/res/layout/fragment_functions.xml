@@ -11,7 +11,7 @@
 
     </com.qmuiteam.qmui.widget.QMUITopBarLayout>
 
-    <xyz.wbsite.wbsiteui.witget.WBUIGridView
+    <xyz.wbsite.wbsiteui.base.witget.WBUIGridView
         android:id="@+id/gridMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

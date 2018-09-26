@@ -1,4 +1,4 @@
-package xyz.wbsite.wbsiteui.utils;
+package xyz.wbsite.wbsiteui.base.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,14 +9,9 @@ import android.view.View;
 import android.view.WindowManager;
 
 /**
- * Created by Administrator on 2018/3/11 0011.
+ * 屏幕相关工具类
  */
-
 public class ScreenUtil {
-    private ScreenUtil() {
-        /* cannot be instantiated */
-        throw new UnsupportedOperationException("cannot be instantiated");
-    }
 
     /**
      * 获得屏幕高度
@@ -83,7 +78,6 @@ public class ScreenUtil {
         bp = Bitmap.createBitmap(bmp, 0, 0, width, height);
         view.destroyDrawingCache();
         return bp;
-
     }
 
     /**

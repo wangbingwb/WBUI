@@ -1,4 +1,4 @@
-package xyz.wbsite.wbsiteui.witget;
+package xyz.wbsite.wbsiteui.base.witget;
 
 import android.app.Dialog;
 import android.content.Context;

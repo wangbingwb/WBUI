@@ -1,17 +1,12 @@
-package xyz.wbsite.wbsiteui.utils;
+package xyz.wbsite.wbsiteui.base.utils;
 
 import android.content.Context;
 import android.util.TypedValue;
 
 /**
- * Created by Administrator on 2018/3/11 0011.
+ * 尺寸单位转换
  */
-
-public class DensityUtil {
-    private DensityUtil() {
-        /* cannot be instantiated */
-        throw new UnsupportedOperationException("cannot be instantiated");
-    }
+public class SizeUtil {
 
     /**
      * dp转px

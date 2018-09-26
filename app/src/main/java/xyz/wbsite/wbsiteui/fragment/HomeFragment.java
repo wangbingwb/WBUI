@@ -7,14 +7,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 
 import com.qmuiteam.qmui.widget.QMUITabSegment;
-import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import xyz.wbsite.wbsiteui.R;
-import xyz.wbsite.wbsiteui.base.BaseFragment;
 import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
 
 public class HomeFragment extends BaseSPAFragment {

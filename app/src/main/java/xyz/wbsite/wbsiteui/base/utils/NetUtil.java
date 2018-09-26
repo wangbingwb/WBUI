@@ -1,4 +1,4 @@
-package xyz.wbsite.wbsiteui.utils;
+package xyz.wbsite.wbsiteui.base.utils;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -8,18 +8,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * Created by Administrator on 2018/3/11 0011.
+ * 网络工具类
  */
-
 public class NetUtil {
     public static final int NO_NETWORK = 0;
     public static final int NETWORK_WIFI = 1;
     public static final int NETWORK_MOBILE = 2;
-
-    private NetUtil() {
-        /* cannot be instantiated */
-        throw new UnsupportedOperationException("cannot be instantiated");
-    }
 
     /**
      * 判断网络是否连接

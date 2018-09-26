@@ -1,4 +1,4 @@
-package xyz.wbsite.wbsiteui.utils;
+package xyz.wbsite.wbsiteui.base.utils;
 
 import java.util.Arrays;
 

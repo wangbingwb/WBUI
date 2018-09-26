@@ -1,8 +1,11 @@
-package xyz.wbsite.wbsiteui.utils;
+package xyz.wbsite.wbsiteui.base.utils;
 
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * 身份证号码工具类
+ */
 public class IdCardUtil {
     /**
      * 中国公民身份证号码最小长度。

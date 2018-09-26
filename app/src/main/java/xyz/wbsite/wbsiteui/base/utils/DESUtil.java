@@ -1,4 +1,4 @@
-package xyz.wbsite.wbsiteui.utils;
+package xyz.wbsite.wbsiteui.base.utils;
 
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -11,7 +11,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-public class CipherUtil {
+public class DESUtil {
 
 	public static final String ALGORITHM_DES = "DES";
 

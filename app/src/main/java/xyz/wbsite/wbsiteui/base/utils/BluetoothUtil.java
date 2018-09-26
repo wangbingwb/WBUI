@@ -1,4 +1,4 @@
-package xyz.wbsite.wbsiteui.utils;
+package xyz.wbsite.wbsiteui.base.utils;
 
 import android.bluetooth.BluetoothDevice;
 import android.util.Log;
@@ -6,7 +6,7 @@ import android.util.Log;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-public class ClsUtils {
+public class BluetoothUtil {
 
 
     /**

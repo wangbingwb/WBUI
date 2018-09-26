@@ -1,4 +1,4 @@
-package xyz.wbsite.wbsiteui.witget.other;
+package xyz.wbsite.wbsiteui.base.witget.other;
 
 import android.content.Context;
 import android.content.res.Resources;

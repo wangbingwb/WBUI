@@ -1,4 +1,4 @@
-package xyz.wbsite.wbsiteui.utils;
+package xyz.wbsite.wbsiteui.base.utils;
 
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
@@ -18,7 +18,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-public class RSASecurityUtil {
+public class RSAUtil {
 
     public static final String PUBLIC_KEY = "RSAPublicKey";
     public static final String PRIVATE_KEY = "RSAPrivateKey";

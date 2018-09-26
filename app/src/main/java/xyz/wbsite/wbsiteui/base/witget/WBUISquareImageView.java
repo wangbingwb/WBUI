@@ -1,23 +1,22 @@
-package xyz.wbsite.wbsiteui.witget;
+package xyz.wbsite.wbsiteui.base.witget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.RelativeLayout;
 
-public class WBUISquareLayout extends RelativeLayout {
+public class WBUISquareImageView extends android.support.v7.widget.AppCompatImageView {
 
     private int weight_width = 1;
     private int weight_height = 1;
 
-    public WBUISquareLayout(Context context, AttributeSet attrs, int defStyle) {
+    public WBUISquareImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    public WBUISquareLayout(Context context, AttributeSet attrs) {
+    public WBUISquareImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public WBUISquareLayout(Context context) {
+    public WBUISquareImageView(Context context) {
         super(context);
     }
 

@@ -17,7 +17,6 @@ import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 
 import butterknife.BindView;
 import xyz.wbsite.wbsiteui.R;
-import xyz.wbsite.wbsiteui.base.BaseFragment;
 import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
 
 public class WebViewFragment extends BaseSPAFragment {

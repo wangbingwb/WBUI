@@ -1,4 +1,4 @@
-package xyz.wbsite.wbsiteui.utils;
+package xyz.wbsite.wbsiteui.base.utils;
 
 import android.os.Environment;
 import android.os.StatFs;
@@ -6,14 +6,9 @@ import android.os.StatFs;
 import java.io.File;
 
 /**
- * Created by Administrator on 2018/3/11 0011.
+ * SD存储工具类
  */
-
 public class SDCardUtil {
-    private SDCardUtil() {
-        /* cannot be instantiated */
-        throw new UnsupportedOperationException("cannot be instantiated");
-    }
 
     /**
      * 判断SDCard是否可用
@@ -70,14 +65,4 @@ public class SDCardUtil {
         long availableBlocks = (long) stat.getAvailableBlocks() - 4;
         return stat.getBlockSize() * availableBlocks;
     }
-
-    /**
-     * 获取系统存储路径
-     *
-     * @return
-     */
-    public static String getRootDirectoryPath() {
-        return Environment.getRootDirectory().getAbsolutePath();
-    }
-
 }

@@ -22,7 +22,7 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
-import xyz.wbsite.wbsiteui.utils.DataBaseUtils;
+import xyz.wbsite.wbsiteui.base.utils.DataBaseUtil;
 
 
 /**
@@ -33,7 +33,7 @@ public class WBUIApplication extends Application implements Thread.UncaughtExcep
     private static WBUIApplication instance;
     private WeakReference<Activity> currentActivity;
 
-    private DataBaseUtils db;
+    private DataBaseUtil db;
     private Map<String, Object> map;
     private Location mLocation;
 
@@ -56,7 +56,7 @@ public class WBUIApplication extends Application implements Thread.UncaughtExcep
         return instance.map;
     }
 
-    public DataBaseUtils getDb() {
+    public DataBaseUtil getDb() {
         return db;
     }
 
@@ -78,7 +78,7 @@ public class WBUIApplication extends Application implements Thread.UncaughtExcep
     }
 
     private void initDB() {
-        db = new DataBaseUtils(this);
+        db = new DataBaseUtil(this);
     }
 
     private void initMap() {

@@ -1,10 +1,9 @@
-package xyz.wbsite.wbsiteui.witget;
+package xyz.wbsite.wbsiteui.base.witget;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 public class WBUITextView extends android.support.v7.widget.AppCompatTextView {
     private int mOffsetY = 0;

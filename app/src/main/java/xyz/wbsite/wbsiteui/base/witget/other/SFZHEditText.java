@@ -1,7 +1,7 @@
 /**
  *
  */
-package xyz.wbsite.wbsiteui.witget.other;
+package xyz.wbsite.wbsiteui.base.witget.other;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

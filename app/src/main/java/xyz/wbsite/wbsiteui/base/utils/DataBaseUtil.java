@@ -1,4 +1,4 @@
-package xyz.wbsite.wbsiteui.utils;
+package xyz.wbsite.wbsiteui.base.utils;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -19,9 +19,11 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataBaseUtils {
+import xyz.wbsite.wbsiteui.base.Content;
+
+public class DataBaseUtil {
     private String defaultPath = "";
-    private String defaultDBName = "dict.db";
+    private String defaultDBName = "data.db";
     private SQLiteOpenHelper sqLiteOpenHelper;
     private SQLiteDatabase writableDatabase;
 
@@ -60,15 +62,14 @@ public class DataBaseUtils {
         }
     }
 
-    private DataBaseUtils() {
+    private DataBaseUtil() {
     }
 
-    public DataBaseUtils(Context context) {
+    public DataBaseUtil(Context context) {
         File ownCacheDirectory = StorageUtils.getOwnCacheDirectory(context, Content.DIR);
         defaultPath = ownCacheDirectory.getAbsolutePath();
         sqLiteOpenHelper = new SQLiteOpenHelperImpl(context, defaultDBName, null, 1);
         writableDatabase = sqLiteOpenHelper.getWritableDatabase();
-
     }
 
     public <T> List<T> query(T t) {
@@ -337,8 +338,8 @@ public class DataBaseUtils {
 
         @Override
         public File getDatabasePath(String name) {
-            if ("".equals(defaultPath)){
-                defaultPath = getApplicationContext().getDatabasePath("dataBaseUtils").getAbsolutePath();
+            if ("".equals(defaultPath)) {
+                defaultPath = getApplicationContext().getDatabasePath("database").getAbsolutePath();
             }
 
             File path = new File(defaultPath);
@@ -348,7 +349,7 @@ public class DataBaseUtils {
 
             File dbfile = new File(path, defaultDBName);
 
-            if (!dbfile.exists()){
+            if (!dbfile.exists()) {
                 try {
                     dbfile.createNewFile();
                 } catch (IOException e) {
@@ -377,7 +378,7 @@ public class DataBaseUtils {
     }
 
     public static class DictSyncRecord {
-        @DataBaseUtils.DBField("VARCHAR(20)")
+        @DataBaseUtil.DBField("VARCHAR(20)")
         private String date;
 
         public String getDate() {
