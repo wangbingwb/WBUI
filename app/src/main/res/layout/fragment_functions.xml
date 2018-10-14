@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        app:qmui_topbar_separator_color="@color/colorGray_10"
+        app:qmui_topbar_separator_height="0dp" />
 
-    </com.qmuiteam.qmui.widget.QMUITopBarLayout>
-
-    <xyz.wbsite.wbsiteui.base.witget.WBUIGridView
+    <xyz.wbsite.wbsiteui.base.ui.WBUIGridView
         android:id="@+id/gridMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:fillViewport="true"
         android:fitsSystemWindows="true"
-        android:numColumns="3" />
+        android:numColumns="4" />
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

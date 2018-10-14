@@ -9,7 +9,8 @@ import com.yanzhenjie.permission.AndPermission;
 import java.util.List;
 
 import xyz.wbsite.wbsiteui.base.BaseSPAActivity;
-import xyz.wbsite.wbsiteui.fragment.HomeFragment;
+import xyz.wbsite.wbsiteui.fragment.MainFragment;
+import xyz.wbsite.wbsiteui.fragment.functions.listView.WBUIFixedRefreshListViewFragment;
 
 public class WBUIMainActivity extends BaseSPAActivity {
     private static final String KEY_FRAGMENT = "key_fragment";
@@ -39,11 +40,11 @@ public class WBUIMainActivity extends BaseSPAActivity {
     }
 
     private void startFirstFragment() {
-        HomeFragment homeFragment = new HomeFragment();
+        WBUIFixedRefreshListViewFragment mainFragment = new WBUIFixedRefreshListViewFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(getContextViewId(), homeFragment, homeFragment.getClass().getSimpleName())
-                .addToBackStack(homeFragment.getClass().getSimpleName())
+                .add(getContextViewId(), mainFragment, mainFragment.getClass().getSimpleName())
+                .addToBackStack(mainFragment.getClass().getSimpleName())
                 .commit();
     }
 

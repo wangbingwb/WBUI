@@ -13,7 +13,7 @@ public class Toaster {
      *
      * @param message 消息内容
      */
-    public void showToast(String message) {
+    public static void showToast(String message) {
         WBUIApplication.getInstance().showToast(message);
     }
 
@@ -23,7 +23,7 @@ public class Toaster {
      * @param message
      * @param view
      */
-    public void showError(String message, View view) {
+    public static void showError(String message, View view) {
         showToast(message);
         if (view != null) {
             view.requestFocus();

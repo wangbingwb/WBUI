@@ -17,6 +17,8 @@ import java.util.List;
 import butterknife.BindView;
 import xyz.wbsite.wbsiteui.R;
 import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
+import xyz.wbsite.wbsiteui.fragment.functions.TakePhotoFragment;
+import xyz.wbsite.wbsiteui.fragment.functions.listView.MenuFragment;
 
 public class FunctionFragment extends BaseSPAFragment {
 
@@ -48,8 +50,17 @@ public class FunctionFragment extends BaseSPAFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Menu menu = data.get(i);
-                if ("TakePhoto".endsWith(menu.getTitile())) {
-                    startFragment(new TakePhotoFragment());
+                switch (menu.getIcon()) {
+                    case R.mipmap.icon_fun_button:
+                        break;
+                    case R.mipmap.icon_fun_list:
+                        startFragment(new MenuFragment());
+                        break;
+                    case R.mipmap.icon_fun_dialog:
+                        break;
+                    case R.mipmap.icon_fun_photo:
+                        startFragment(new TakePhotoFragment());
+                        break;
                 }
             }
         });
@@ -59,21 +70,28 @@ public class FunctionFragment extends BaseSPAFragment {
         {
             Menu menu = new Menu();
             menu.setTitile("Button");
-            menu.setIcon(R.mipmap.icon_grid_button);
+            menu.setIcon(R.mipmap.icon_fun_button);
+            data.add(menu);
+        }
+
+        {
+            Menu menu = new Menu();
+            menu.setTitile("List");
+            menu.setIcon(R.mipmap.icon_fun_list);
             data.add(menu);
         }
 
         {
             Menu menu = new Menu();
             menu.setTitile("Dialog");
-            menu.setIcon(R.mipmap.icon_grid_dialog);
+            menu.setIcon(R.mipmap.icon_fun_dialog);
             data.add(menu);
         }
 
         {
             Menu menu = new Menu();
             menu.setTitile("TakePhoto");
-            menu.setIcon(R.mipmap.icon_grid_dialog);
+            menu.setIcon(R.mipmap.icon_fun_photo);
             data.add(menu);
         }
 

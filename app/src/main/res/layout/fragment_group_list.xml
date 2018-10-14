@@ -20,22 +20,15 @@
         android:fitsSystemWindows="true">
 
         <ScrollView
-            android:fillViewport="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-            <LinearLayout
+            <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+                android:id="@+id/groupListView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content" />
 
-                <TextView
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="个人主页" />
-            </LinearLayout>
         </ScrollView>
     </FrameLayout>
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

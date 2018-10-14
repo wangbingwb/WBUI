@@ -66,7 +66,7 @@ public class DataBaseUtil {
     }
 
     public DataBaseUtil(Context context) {
-        File ownCacheDirectory = StorageUtils.getOwnCacheDirectory(context, Content.DIR);
+        File ownCacheDirectory = StorageUtil.getOwnCacheDirectory(context, Content.DIR);
         defaultPath = ownCacheDirectory.getAbsolutePath();
         sqLiteOpenHelper = new SQLiteOpenHelperImpl(context, defaultDBName, null, 1);
         writableDatabase = sqLiteOpenHelper.getWritableDatabase();

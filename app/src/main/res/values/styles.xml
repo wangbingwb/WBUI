@@ -18,6 +18,7 @@
         <item name="qmui_tab_sign_count_view_minSize_with_text">@dimen/qmui_tab_sign_count_view_minSize_with_text</item>
         <item name="qmui_tab_sign_count_view_bg">@drawable/qmui_sign_count_view_bg</item>
         <item name="qmui_tab_sign_count_view_padding_horizontal">4dp</item>
+
     </style>
 
     <style name="AppTheme.Translucent">
