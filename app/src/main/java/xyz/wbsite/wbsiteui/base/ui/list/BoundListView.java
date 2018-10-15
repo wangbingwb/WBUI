@@ -133,7 +133,6 @@ public class BoundListView extends ListView {
                         i += d;
                         temp = (int) (Math.pow((double) i / during - 1, 2) * temp);
                         mOverY = flag * temp;
-//                        Log.e("-mOverY=",""+mOverY);
                         postInvalidate();
                     }
                     mOverY = 0;

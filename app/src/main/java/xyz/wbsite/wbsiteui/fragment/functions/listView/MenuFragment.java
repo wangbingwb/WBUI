@@ -28,7 +28,7 @@ public class MenuFragment extends BaseSPAFragment {
     }
 
     private void initGroupListView() {
-        QMUICommonListItemView itemWithChevron = groupListView.createItemView("WBUIFixedRefreshListView");
+        QMUICommonListItemView itemWithChevron = groupListView.createItemView("下拉刷新");
         itemWithChevron.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -37,8 +37,8 @@ public class MenuFragment extends BaseSPAFragment {
                 if (v instanceof QMUICommonListItemView) {
                     CharSequence text = ((QMUICommonListItemView) v).getText();
 
-                    if ("WBUIFixedRefreshListView".equals(text)) {
-                        startFragment(new WBUIFixedRefreshListViewFragment());
+                    if ("WBUIPaternalLayout".equals(text)) {
+                        startFragment(new WBUIPaternalLayoutFragment());
                     }
                 }
             }

@@ -1,4 +1,4 @@
-package xyz.wbsite.wbsiteui.base.ui.list;
+package xyz.wbsite.wbsiteui.base.ui.layout;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -12,43 +12,41 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Scroller;
 
 import com.qmuiteam.qmui.R;
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
 import xyz.wbsite.wbsiteui.base.utils.DensityUtil;
 
-public class PaternalLayout extends ViewGroup implements NestedScrollingParent, AbsListView.OnScrollListener {
-    private static final String TAG = "WBUIListView";
+public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingParent, AbsListView.OnScrollListener {
+    private static final String TAG = "WBUIPaternalLayout";
     private final NestedScrollingParentHelper mNestedScrollingParentHelper;
-    boolean mIsRefreshing = false;
+
     private View mTargetView;
     private View mPullView;
     private View mPushView;
-    private FrameLayout headView;
-    private FrameLayout footView;
+
     private int mPullViewIndex = -1;
     private int mPushViewIndex = -1;
-    private int mTouchSlop;
     private boolean mNestedScrollInProgress;
     private float mInitialDownY;
     private float mInitialDownX;
-    private float mInitialMotionY;
     private float mLastMotionY;
     private float mDragRate = 0.8f;
+    private int mTheshold = 20;
     private Scroller mScroller;
-    private boolean mNestScrollDurationRefreshing = false;
+
+    private int firstVisibleItem = 0;
+    private int visibleItemCount = 0;
+    private int totalItemCount = 0;
 
     private IPullViewBuilder pullViewBuilder;
     private IPushViewBuilder pushViewBuilder;
 
     private int pullOffset = 0;
-    private int pullHeight = DensityUtil.dp2px(getContext(),150);
+    private int pullHeight = DensityUtil.dp2px(getContext(), 100);
     private int pushOffset = 0;
-    private int pushHeight = DensityUtil.dp2px(getContext(),150);
+    private int pushHeight = DensityUtil.dp2px(getContext(), 100);
 
     private boolean mIsPull;
     private boolean mIsPush;
@@ -60,6 +58,11 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
 
     @Override
     public void onViewAdded(View child) {
+        int maxChild = 1 + (mPullView != null ? 1 : 0) + (mPushView != null ? 1 : 0);
+        if (getChildCount() > maxChild) {
+            throw new IllegalStateException("WBUIPaternalLayout can host only one child");
+        }
+
         if (child instanceof AbsListView) {
             AbsListView listView = (AbsListView) child;
             listView.setOnScrollListener(this);
@@ -67,35 +70,23 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
         super.onViewAdded(child);
     }
 
-    public PaternalLayout(Context context) {
+    public WBUIPaternalLayout(Context context) {
         this(context, null);
     }
 
-    public PaternalLayout(Context context, AttributeSet attrs) {
+    public WBUIPaternalLayout(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.QMUIPullRefreshLayoutStyle);
     }
 
-    public PaternalLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public WBUIPaternalLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setWillNotDraw(false);
-
-        final ViewConfiguration vc = ViewConfiguration.get(context);
-        mTouchSlop = QMUIDisplayHelper.px2dp(context, vc.getScaledTouchSlop()); //系统的值是8dp,如何配置？
 
         mScroller = new Scroller(getContext());
         mScroller.setFriction(ViewConfiguration.getScrollFriction());
 
         ViewCompat.setChildrenDrawingOrderEnabled(this, true);
-
         mNestedScrollingParentHelper = new NestedScrollingParentHelper(this);
-
-        headView = new FrameLayout(getContext());
-        headView.setBackgroundColor(getResources().getColor(xyz.wbsite.wbsiteui.R.color.app_color_theme_5));
-        headView.setLayoutParams(new LinearLayout.LayoutParams(width, pullHeight));
-        footView = new FrameLayout(getContext());
-        footView.setLayoutParams(new LinearLayout.LayoutParams(width, pushHeight));
-//        addView(headView,-0);
-//        addView(footView);
     }
 
     public interface Notify {
@@ -105,7 +96,7 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
     public interface IPullViewBuilder {
         View createView();
 
-        void onChange(View view, int currentHeight, int pullHeight);
+        void onChange(View view, int currentHeight, int pullHeight, boolean isNearHeight);
 
         void onAction(View view, int pullHeight, Notify notify);
     }
@@ -113,7 +104,7 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
     public interface IPushViewBuilder {
         View createView();
 
-        void onChange(View view, int currentHeight, int pushHeight);
+        void onChange(View view, int currentHeight, int pushHeight, boolean isNearHeight);
 
         void onAction(View view, int pushHeight, Notify notify);
     }
@@ -122,7 +113,6 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
         this.pullViewBuilder = pullViewBuilder;
         if (mPullView == null) {
             mPullView = pullViewBuilder.createView();
-//            headView.addView(mPullView);
             addView(mPullView);
         }
     }
@@ -131,7 +121,6 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
         this.pushViewBuilder = pushViewBuilder;
         if (mPushView == null) {
             mPushView = pushViewBuilder.createView();
-//            footView.addView(mPushView);
             addView(mPushView);
         }
     }
@@ -141,7 +130,6 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
         if (mPullViewIndex < 0 || mPushViewIndex < 0) {
             return i;
         }
-        // 最后才绘制mRefreshView
         if (i == mPullViewIndex || i == mPushViewIndex) {
             return childCount - 1;
         }
@@ -192,10 +180,6 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
         }
     }
 
-    private void log(String s) {
-        Log.i("===========>", s);
-    }
-
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         width = getMeasuredWidth();
@@ -212,8 +196,6 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
         final int childWidth = width - getPaddingLeft() - getPaddingRight();
         final int childHeight = height - getPaddingTop() - getPaddingBottom();
         mTargetView.layout(0, 0, 0 + childWidth, 0 + childHeight);
-        headView.layout(0, 0, width, pullHeight);
-        footView.layout(0, height - pushHeight, width, height - pushHeight + pushHeight);
     }
 
     @Override
@@ -245,7 +227,6 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
             case MotionEvent.ACTION_MOVE:
                 final float x = ev.getX();
                 final float y = ev.getY();
-            {
                 final float dx = x - mInitialDownX;
                 final float dy = y - mInitialDownY;
                 boolean isYDrag = Math.abs(dy) > Math.abs(dx);
@@ -263,8 +244,7 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
                     mIsPush = true;
                     return true;
                 }
-            }
-            break;
+                break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 reset();
@@ -289,17 +269,17 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
                 final float y = ev.getY();
                 float dy = (y - mLastMotionY) * mDragRate;
 
-                if (mIsPull && pullViewBuilder != null) {
+                if (mIsPull && pullViewBuilder != null && mPullView != null) {
                     pullOffset += dy;
                     if (pullOffset > pullHeight) {
                         pullOffset = pullHeight;
                     }
-                    pullViewBuilder.onChange(mPullView, pullOffset, pullHeight);
+                    pullViewBuilder.onChange(mPullView, pullOffset, pullHeight, pullHeight - pullOffset < mTheshold);
                     mPullView.setLayoutParams(new LayoutParams(width, pullOffset));
                     mPullView.layout(0, 0, width, pullOffset);
                     invalidate();
                 }
-                if (mIsPush && pushViewBuilder != null) {
+                if (mIsPush && pushViewBuilder != null && mPushView != null) {
                     if (dy > 0) {
                         pushOffset -= Math.abs(dy);
                     } else {
@@ -311,7 +291,7 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
                     }
                     final int width = getMeasuredWidth();
                     final int height = getMeasuredHeight();
-                    pushViewBuilder.onChange(mPushView, pushOffset, pushHeight);
+                    pushViewBuilder.onChange(mPushView, pushOffset, pushHeight, pushHeight - pushOffset < mTheshold);
                     mPushView.setLayoutParams(new LayoutParams(width, pushOffset));
                     mPushView.layout(0, height - pushOffset, width, height);
                     invalidate();
@@ -332,7 +312,7 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
         if (mTargetView == null) {
             for (int i = 0; i < getChildCount(); i++) {
                 View view = getChildAt(i);
-                if (!view.equals(mPullView)) {
+                if (!view.equals(mPullView) && !view.equals(mPushView)) {
                     mTargetView = view;
                     break;
                 }
@@ -341,9 +321,7 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
     }
 
     public void reset() {
-        log("------------------------------reset----------------------------");
-        mIsPull = false;
-        mIsPush = false;
+        mIsPull = mIsPush = false;
 
         if (!mScroller.isFinished()) {
             mScroller.abortAnimation();
@@ -381,7 +359,6 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
         if (mIsPull || mIsPush) {
             return;
         }
-//        log("------------------------------computeScroll--------------" + pullOffset + "," + pushOffset + "--------------");
         if (mScroller.computeScrollOffset()) {
             if (pullOffset > 0) {
                 pullOffset = pullOffset - mScroller.getCurrY();
@@ -400,14 +377,6 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
                 mPushView.layout(0, height - pushOffset, width, height);
                 invalidate();
             }
-        } else {
-//            if (pullOffset != 0 || pushOffset != 0) {
-//                pullOffset = 0;
-//                pushOffset = 0;
-//                mPullView.layout(0, 0, width, pullOffset);
-//                mPushView.layout(0, height - pushOffset, width, height - pushOffset + pushHeight);
-//                invalidate();
-//            }
         }
     }
 
@@ -525,32 +494,9 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        final int action = ev.getAction();
-        if (action == MotionEvent.ACTION_DOWN) {
-            mNestScrollDurationRefreshing = mIsRefreshing;
-        } else if (mNestScrollDurationRefreshing) {
-            if (action == MotionEvent.ACTION_MOVE) {
-                if (!mIsRefreshing) {
-                    mNestScrollDurationRefreshing = false;
-                    ev.setAction(MotionEvent.ACTION_DOWN);
-                }
-            } else {
-                mNestScrollDurationRefreshing = false;
-            }
-        }
-
-        return super.dispatchTouchEvent(ev);
-    }
-
-    @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
 
     }
-
-    private int firstVisibleItem = 0;
-    private int visibleItemCount = 0;
-    private int totalItemCount = 0;
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -560,41 +506,7 @@ public class PaternalLayout extends ViewGroup implements NestedScrollingParent, 
     }
 
     public interface OnChildScrollUpCallback {
-        boolean canChildScrollUp(PaternalLayout parent, @Nullable View child);
-    }
-
-    public interface RefreshOffsetCalculator {
-
-        /**
-         * 通过 targetView 的当前位置、targetView 的初始和刷新位置以及 refreshView 的初始与结束位置计算 RefreshView 的位置。
-         *
-         * @param refreshInitOffset   RefreshView 的初始 offset。
-         * @param refreshEndOffset    刷新时 RefreshView 的 offset。
-         * @param refreshViewHeight   RerfreshView 的高度
-         * @param targetCurrentOffset 下拉时 TargetView（ListView 或者 ScrollView 等）当前的位置。
-         * @param targetInitOffset    TargetView（ListView 或者 ScrollView 等）的初始位置。
-         * @param targetRefreshOffset 刷新时 TargetView（ListView 或者 ScrollView等）的位置。
-         * @return RefreshView 当前的位置。
-         */
-        int calculateRefreshOffset(int refreshInitOffset, int refreshEndOffset, int refreshViewHeight,
-                                   int targetCurrentOffset, int targetInitOffset, int targetRefreshOffset);
-    }
-
-    public class DefaultRefreshOffsetCalculator implements PaternalLayout.RefreshOffsetCalculator {
-
-        @Override
-        public int calculateRefreshOffset(int refreshInitOffset, int refreshEndOffset, int refreshViewHeight, int targetCurrentOffset, int targetInitOffset, int targetRefreshOffset) {
-            int refreshOffset;
-            if (targetCurrentOffset >= targetRefreshOffset) {
-                refreshOffset = refreshEndOffset;
-            } else if (targetCurrentOffset <= targetInitOffset) {
-                refreshOffset = refreshInitOffset;
-            } else {
-                float percent = (targetCurrentOffset - targetInitOffset) * 1.0f / (targetRefreshOffset - targetInitOffset);
-                refreshOffset = (int) (refreshInitOffset + percent * (refreshEndOffset - refreshInitOffset));
-            }
-            return refreshOffset;
-        }
+        boolean canChildScrollUp(WBUIPaternalLayout parent, @Nullable View child);
     }
 
 }

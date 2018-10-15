@@ -9,8 +9,7 @@ import com.yanzhenjie.permission.AndPermission;
 import java.util.List;
 
 import xyz.wbsite.wbsiteui.base.BaseSPAActivity;
-import xyz.wbsite.wbsiteui.fragment.MainFragment;
-import xyz.wbsite.wbsiteui.fragment.functions.listView.WBUIFixedRefreshListViewFragment;
+import xyz.wbsite.wbsiteui.fragment.functions.listView.WBUIPaternalLayoutFragment;
 
 public class WBUIMainActivity extends BaseSPAActivity {
     private static final String KEY_FRAGMENT = "key_fragment";
@@ -40,7 +39,7 @@ public class WBUIMainActivity extends BaseSPAActivity {
     }
 
     private void startFirstFragment() {
-        WBUIFixedRefreshListViewFragment mainFragment = new WBUIFixedRefreshListViewFragment();
+        WBUIPaternalLayoutFragment mainFragment = new WBUIPaternalLayoutFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(getContextViewId(), mainFragment, mainFragment.getClass().getSimpleName())
