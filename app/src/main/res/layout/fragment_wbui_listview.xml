@@ -19,7 +19,7 @@
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:fitsSystemWindows="true">
 
-        <xyz.wbsite.wbsiteui.base.ui.list.WBUIListView
+        <xyz.wbsite.wbsiteui.base.ui.list.PaternalLayout
             android:id="@+id/paternalLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -29,6 +29,6 @@
                 android:layout_height="match_parent">
             </ListView>
 
-        </xyz.wbsite.wbsiteui.base.ui.list.WBUIListView>
+        </xyz.wbsite.wbsiteui.base.ui.list.PaternalLayout>
     </FrameLayout>
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

@@ -1,34 +1,29 @@
 package xyz.wbsite.wbsiteui.fragment.functions.listView;
 
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import xyz.wbsite.wbsiteui.R;
 import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
-import xyz.wbsite.wbsiteui.base.ui.list.BoundListView;
 import xyz.wbsite.wbsiteui.base.ui.list.PaternalLayout;
-import xyz.wbsite.wbsiteui.base.ui.list.WBUIListView;
 
 public class WBUIFixedRefreshListViewFragment extends BaseSPAFragment {
 
     @BindView(R.id.topbar)
     QMUITopBarLayout topbar;
     @BindView(R.id.paternalLayout)
-    WBUIListView paternalLayout;
+    PaternalLayout paternalLayout;
 
     @BindView(R.id.listView)
     ListView listView;
-
 
     TextView textView1;
     TextView textView2;
@@ -42,10 +37,11 @@ public class WBUIFixedRefreshListViewFragment extends BaseSPAFragment {
     protected void initView() {
         textView1 = new TextView(getContext());
         textView2 = new TextView(getContext());
-        paternalLayout.setPullViewBuilder(new WBUIListView.IPullViewBuilder() {
+        paternalLayout.setPullViewBuilder(new PaternalLayout.IPullViewBuilder() {
             @Override
             public View createView() {
                 textView1.setText("AAAAAAAAAAAA");
+                textView1.setGravity(Gravity.CENTER);
                 textView1.setBackgroundColor(getResources().getColor(R.color.app_color_theme_5));
                 return textView1;
             }
@@ -56,21 +52,23 @@ public class WBUIFixedRefreshListViewFragment extends BaseSPAFragment {
             }
 
             @Override
-            public void onAction(View view, int mRefreshHeight, WBUIListView.Notify notify) {
-
-                notify.action();
-            }
-
-            @Override
-            public void onFinish(View view, int mRefreshHeight, WBUIListView.Notify notify) {
-                notify.finish();
+            public void onAction(View view, int mRefreshHeight, final PaternalLayout.Notify notify) {
+                TextView textView = (TextView) view;
+                textView.setText("正在刷新");
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        notify.finish();
+                    }
+                }, 1000);
             }
         });
 
-        paternalLayout.setPushViewBuilder(new WBUIListView.IPushViewBuilder() {
+        paternalLayout.setPushViewBuilder(new PaternalLayout.IPushViewBuilder() {
             @Override
             public View createView() {
                 textView2.setText("BBBBBBBBB");
+                textView2.setGravity(Gravity.CENTER);
                 textView2.setBackgroundColor(getResources().getColor(R.color.app_color_theme_5));
                 return textView2;
             }
@@ -81,20 +79,21 @@ public class WBUIFixedRefreshListViewFragment extends BaseSPAFragment {
             }
 
             @Override
-            public void onAction(View view, int mRefreshHeight, WBUIListView.Notify notify) {
-
-                notify.action();
+            public void onAction(View view, int mRefreshHeight, final PaternalLayout.Notify notify) {
+                TextView textView = (TextView) view;
+                textView.setText("正在加载");
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        notify.finish();
+                    }
+                }, 1000);
             }
 
-            @Override
-            public void onFinish(View view, int mRefreshHeight, WBUIListView.Notify notify) {
-                notify.finish();
-            }
         });
 
-
         ArrayList<String> strings = new ArrayList<>();
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 5; i++) {
             strings.add(i + "");
         }
         listView.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, strings));
