@@ -9,6 +9,9 @@ import com.yanzhenjie.permission.AndPermission;
 import java.util.List;
 
 import xyz.wbsite.wbsiteui.base.BaseSPAActivity;
+import xyz.wbsite.wbsiteui.fragment.HomeFragment;
+import xyz.wbsite.wbsiteui.fragment.LoginFragment;
+import xyz.wbsite.wbsiteui.fragment.MainFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.listView.WBUIPaternalLayoutFragment;
 
 public class WBUIMainActivity extends BaseSPAActivity {
@@ -39,7 +42,7 @@ public class WBUIMainActivity extends BaseSPAActivity {
     }
 
     private void startFirstFragment() {
-        WBUIPaternalLayoutFragment mainFragment = new WBUIPaternalLayoutFragment();
+        MainFragment mainFragment = new MainFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(getContextViewId(), mainFragment, mainFragment.getClass().getSimpleName())

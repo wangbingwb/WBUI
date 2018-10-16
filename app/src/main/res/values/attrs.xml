@@ -14,4 +14,9 @@
         <attr name="dictName" format="string" />
         <attr name="inputHint" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="uiSquare">
+        <attr name="weight_width" format="integer" />
+        <attr name="weight_height" format="integer" />
+    </declare-styleable>
 </resources>

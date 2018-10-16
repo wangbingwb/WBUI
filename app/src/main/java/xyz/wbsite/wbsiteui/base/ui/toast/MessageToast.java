@@ -10,9 +10,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/**
- * Created by wangbing on 2016/5/5.
- */
 public class MessageToast extends Toast {
     private Context mContext;
     private FrameLayout mRootView;

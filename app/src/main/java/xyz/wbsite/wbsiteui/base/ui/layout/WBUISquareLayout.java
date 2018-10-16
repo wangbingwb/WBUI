@@ -1,22 +1,30 @@
-package xyz.wbsite.wbsiteui.base.ui;
+package xyz.wbsite.wbsiteui.base.ui.layout;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.widget.RelativeLayout;
 
-public class WBUISquareImageView extends android.support.v7.widget.AppCompatImageView {
+import xyz.wbsite.wbsiteui.R;
+
+public class WBUISquareLayout extends RelativeLayout {
 
     private int weight_width = 1;
     private int weight_height = 1;
 
-    public WBUISquareImageView(Context context, AttributeSet attrs, int defStyle) {
+    public WBUISquareLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    public WBUISquareImageView(Context context, AttributeSet attrs) {
+    public WBUISquareLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.uiSquare);
+        weight_width = typedArray.getInt(R.styleable.uiSquare_weight_width,1);
+        weight_height = typedArray.getInt(R.styleable.uiSquare_weight_height,1);
     }
 
-    public WBUISquareImageView(Context context) {
+    public WBUISquareLayout(Context context) {
         super(context);
     }
 
