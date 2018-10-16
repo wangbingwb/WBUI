@@ -327,7 +327,7 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
             mScroller.abortAnimation();
         }
 
-        if (pullOffset >= pullHeight) {
+        if (pullOffset >= pullHeight - mTheshold) {
             pullViewBuilder.onAction(mPullView, pullHeight, new Notify() {
                 @Override
                 public void finish() {
@@ -340,7 +340,7 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
             invalidate();
         }
 
-        if (pushOffset >= pushHeight) {
+        if (pushOffset >= pushHeight - mTheshold) {
             pushViewBuilder.onAction(mPushView, pushHeight, new Notify() {
                 @Override
                 public void finish() {
