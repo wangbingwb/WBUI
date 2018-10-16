@@ -92,7 +92,7 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
 
         void onChange(View view, int currentHeight, int pullHeight, boolean isNearHeight);
 
-        void onAction(View view, int pullHeight, Notify notify);
+        void onAction(View view, int pullHeight, WBUIPaternalLayout layout);
     }
 
     public interface IPushViewBuilder {
@@ -100,7 +100,7 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
 
         void onChange(View view, int currentHeight, int pushHeight, boolean isNearHeight);
 
-        void onAction(View view, int pushHeight, Notify notify);
+        void onAction(View view, int pushHeight, WBUIPaternalLayout layout);
     }
 
     public void setPullViewBuilder(IPullViewBuilder pullViewBuilder) {
@@ -322,26 +322,24 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
         }
 
         if (pullOffset >= pullHeight - mTheshold) {
-            pullViewBuilder.onAction(mPullView, pullHeight, new Notify() {
-                @Override
-                public void finish() {
-                    mScroller.startScroll(0, 0, 0, pullOffset, 800);
-                    postInvalidate();
-                }
-            });
+            pullViewBuilder.onAction(mPullView, pullHeight, this);
         } else if (pullOffset > 0) {
             mScroller.startScroll(0, 0, 0, pullOffset, 800);
             postInvalidate();
         }
 
         if (pushOffset >= pushHeight - mTheshold) {
-            pushViewBuilder.onAction(mPushView, pushHeight, new Notify() {
-                @Override
-                public void finish() {
-                    mScroller.startScroll(0, 0, 0, pushOffset, 800);
-                    postInvalidate();
-                }
-            });
+            pushViewBuilder.onAction(mPushView, pushHeight, this);
+        } else if (pushOffset > 0) {
+            mScroller.startScroll(0, 0, 0, pushOffset, 800);
+            postInvalidate();
+        }
+    }
+
+    public void finish() {
+        if (pullOffset > 0) {
+            mScroller.startScroll(0, 0, 0, pullOffset, 800);
+            postInvalidate();
         } else if (pushOffset > 0) {
             mScroller.startScroll(0, 0, 0, pushOffset, 800);
             postInvalidate();

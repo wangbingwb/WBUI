@@ -53,12 +53,12 @@ public class WBUIPaternalLayoutFragment extends BaseSPAFragment {
             }
 
             @Override
-            public void onAction(View view, int mRefreshHeight, final WBUIPaternalLayout.Notify notify) {
+            public void onAction(View view, int mRefreshHeight, WBUIPaternalLayout layout) {
                 txtText.setText("正在刷新");
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        notify.finish();
+                        paternalLayout.finish();
                     }
                 },1000);
             }
