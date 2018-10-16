@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Scroller;
 
-import com.qmuiteam.qmui.R;
-
 import xyz.wbsite.wbsiteui.base.utils.DensityUtil;
 
 public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingParent, AbsListView.OnScrollListener {
@@ -75,11 +73,7 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
     }
 
     public WBUIPaternalLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.QMUIPullRefreshLayoutStyle);
-    }
-
-    public WBUIPaternalLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs);
         setWillNotDraw(false);
 
         mScroller = new Scroller(getContext());
@@ -274,10 +268,10 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
                     if (pullOffset > pullHeight) {
                         pullOffset = pullHeight;
                     }
-                    pullViewBuilder.onChange(mPullView, pullOffset, pullHeight, pullHeight - pullOffset < mTheshold);
+                    pullViewBuilder.onChange(mPullView, pullOffset, pullHeight, pullOffset >= pullHeight - mTheshold);
                     mPullView.setLayoutParams(new LayoutParams(width, pullOffset));
                     mPullView.layout(0, 0, width, pullOffset);
-                    invalidate();
+                    postInvalidate();
                 }
                 if (mIsPush && pushViewBuilder != null && mPushView != null) {
                     if (dy > 0) {
@@ -291,10 +285,10 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
                     }
                     final int width = getMeasuredWidth();
                     final int height = getMeasuredHeight();
-                    pushViewBuilder.onChange(mPushView, pushOffset, pushHeight, pushHeight - pushOffset < mTheshold);
+                    pushViewBuilder.onChange(mPushView, pushOffset, pushHeight, pushOffset >= pushHeight - mTheshold);
                     mPushView.setLayoutParams(new LayoutParams(width, pushOffset));
                     mPushView.layout(0, height - pushOffset, width, height);
-                    invalidate();
+                    postInvalidate();
                 }
                 break;
             }
@@ -331,26 +325,26 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
             pullViewBuilder.onAction(mPullView, pullHeight, new Notify() {
                 @Override
                 public void finish() {
-                    mScroller.startScroll(0, 0, 0, pullOffset, 1400);
-                    invalidate();
+                    mScroller.startScroll(0, 0, 0, pullOffset, 800);
+                    postInvalidate();
                 }
             });
         } else if (pullOffset > 0) {
-            mScroller.startScroll(0, 0, 0, pullOffset, 1400);
-            invalidate();
+            mScroller.startScroll(0, 0, 0, pullOffset, 800);
+            postInvalidate();
         }
 
         if (pushOffset >= pushHeight - mTheshold) {
             pushViewBuilder.onAction(mPushView, pushHeight, new Notify() {
                 @Override
                 public void finish() {
-                    mScroller.startScroll(0, 0, 0, pushOffset, 1400);
-                    invalidate();
+                    mScroller.startScroll(0, 0, 0, pushOffset, 800);
+                    postInvalidate();
                 }
             });
         } else if (pushOffset > 0) {
-            mScroller.startScroll(0, 0, 0, pushOffset, 1400);
-            invalidate();
+            mScroller.startScroll(0, 0, 0, pushOffset, 800);
+            postInvalidate();
         }
     }
 
@@ -364,18 +358,20 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
                 pullOffset = pullOffset - mScroller.getCurrY();
                 if (pullOffset <= 0) {
                     pullOffset = 0;
-                    mIsPull = false;
+                    mScroller.abortAnimation();
                 }
                 mPullView.layout(0, 0, width, pullOffset);
-                invalidate();
+                postInvalidate();
             } else if (pushOffset > 0) {
                 pushOffset = pushOffset - mScroller.getCurrY();
                 if (pushOffset <= 0) {
                     pushOffset = 0;
-                    mIsPush = false;
+                    mScroller.abortAnimation();
                 }
                 mPushView.layout(0, height - pushOffset, width, height);
-                invalidate();
+                postInvalidate();
+            } else {
+                postInvalidate();
             }
         }
     }
@@ -391,7 +387,7 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
         super.setEnabled(enabled);
         if (!enabled) {
             reset();
-            invalidate();
+            postInvalidate();
         }
     }
 
@@ -508,5 +504,4 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
     public interface OnChildScrollUpCallback {
         boolean canChildScrollUp(WBUIPaternalLayout parent, @Nullable View child);
     }
-
 }

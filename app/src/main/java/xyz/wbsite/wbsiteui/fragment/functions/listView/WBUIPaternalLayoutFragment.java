@@ -60,7 +60,7 @@ public class WBUIPaternalLayoutFragment extends BaseSPAFragment {
                     public void run() {
                         notify.finish();
                     }
-                }, 1000);
+                },1000);
             }
         });
 
