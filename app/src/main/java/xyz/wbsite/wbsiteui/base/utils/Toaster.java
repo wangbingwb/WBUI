@@ -27,7 +27,7 @@ public class Toaster {
         showToast(message);
         if (view != null) {
             view.requestFocus();
-            view.startAnimation(AnimationUtil.getShakeAnimation(3));
+            AnimationUtil.shake(view,3);
         }
     }
 }

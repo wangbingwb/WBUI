@@ -35,10 +35,12 @@ import java.io.OutputStream;
 import butterknife.BindView;
 import xyz.wbsite.wbsiteui.R;
 import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
+import xyz.wbsite.wbsiteui.base.utils.StorageUtil;
+import xyz.wbsite.wbsiteui.base.utils.Toaster;
 
 public class TakePhotoFragment extends BaseSPAFragment implements TakePhoto.TakeResultListener, InvokeListener {
-    private static final String TAG = com.jph.takephoto.app.TakePhotoFragment.class.getName();
-    private InvokeParam invokeParam;
+    private static final String TAG = TakePhotoFragment.class.getName();
+
 
     //UIs
     @BindView(R.id.take_from_camera)
@@ -55,13 +57,12 @@ public class TakePhotoFragment extends BaseSPAFragment implements TakePhoto.Take
     private CropOptions cropOptions;  //裁剪参数
     private CompressConfig compressConfig;  //压缩参数
     private Uri imageUri;  //图片保存路径
+    private InvokeParam invokeParam;
 
     @Override
     protected int getFragmnetLayout() {
         return R.layout.fragment_take_photo;
     }
-
-
 
     @Override
     protected void initView() {
@@ -70,12 +71,7 @@ public class TakePhotoFragment extends BaseSPAFragment implements TakePhoto.Take
         takeFromCameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                initData();  //设置压缩、裁剪参数
-                imageUri = getImageCropUri();
-                //拍照并裁剪
-                takePhoto.onPickFromCaptureWithCrop(imageUri, cropOptions);
-                //仅仅拍照不裁剪
-                //takePhoto.onPickFromCapture(imageUri);
+                onCapture();
             }
         });
 
@@ -89,6 +85,20 @@ public class TakePhotoFragment extends BaseSPAFragment implements TakePhoto.Take
                 //takePhoto.onPickFromGallery();
             }
         });
+    }
+
+    private void onCapture() {
+        //获取TakePhoto实例
+        takePhoto = getTakePhoto();
+        //设置压缩、裁剪参数
+        //设置裁剪参数
+        cropOptions = new CropOptions.Builder().setAspectX(240).setAspectY(320).setWithOwnCrop(true).create();
+        //设置压缩参数
+        compressConfig = new CompressConfig.Builder().setMaxSize(512 * 1024).setMaxPixel(800).create();
+        takePhoto.onEnableCompress(compressConfig, true);  //设置为需要压缩
+        imageUri = getImageCropUri();
+        //拍照并裁剪
+        takePhoto.onPickFromCaptureWithCrop(imageUri, cropOptions);
     }
 
     @Override
@@ -122,13 +132,13 @@ public class TakePhotoFragment extends BaseSPAFragment implements TakePhoto.Take
         String compressPath = result.getImage().getCompressPath();
         if (compressPath != null) {
             File file = new File(compressPath);
-            File file1 = new File(Environment.getExternalStorageDirectory(), "/temp/min_" + file.getName());
+            File file1 = new File(StorageUtil.getOwnCacheDirectory(getContext(),"temp"), "min_" + file.getName());
             copyFileUsingFileStreams(file, file1);
         }
-//        String iconPath = result.getImage().getOriginalPath();
-//        //Toast显示图片路径
-//        Toast.makeText(getActivity(), "imagePath:" + iconPath, Toast.LENGTH_SHORT).show();
-//        //Google Glide库 用于加载图片资源
+        //图片路径
+        String iconPath = result.getImage().getOriginalPath();
+        Toaster.showToast("imagePath:" + iconPath);
+        //Google Glide库 用于加载图片资源
         Glide.with(this).load(compressPath).into(imageView);
     }
 
@@ -180,16 +190,6 @@ public class TakePhotoFragment extends BaseSPAFragment implements TakePhoto.Take
             this.invokeParam = invokeParam;
         }
         return type;
-    }
-
-    private void initData() {
-        ////获取TakePhoto实例
-        takePhoto = getTakePhoto();
-        //设置裁剪参数
-        cropOptions = new CropOptions.Builder().setAspectX(1).setAspectY(1).setWithOwnCrop(false).create();
-        //设置压缩参数
-        compressConfig = new CompressConfig.Builder().setMaxSize(500 * 1024).setMaxPixel(1000).create();
-        takePhoto.onEnableCompress(compressConfig, true);  //设置为需要压缩
     }
 
     /**
