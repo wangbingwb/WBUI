@@ -9,6 +9,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.zxing.integration.android.IntentIntegrator;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import xyz.wbsite.wbsiteui.R;
+import xyz.wbsite.wbsiteui.activity.QRcodeActivity;
 import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.TakePhotoFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.listView.MenuFragment;
@@ -61,6 +63,16 @@ public class FunctionFragment extends BaseSPAFragment {
                     case R.mipmap.icon_fun_photo:
                         startFragment(new TakePhotoFragment());
                         break;
+                    case R.mipmap.icon_scanning:
+                        new IntentIntegrator(getActivity())
+                                .setCaptureActivity(QRcodeActivity.class)
+                                .setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)// 扫码的类型,可选：一维码，二维码，一/二维码
+                                .setPrompt("请对准二维码")// 设置提示语
+                                .setCameraId(0)// 选择摄像头,可使用前置或者后置
+                                .setBeepEnabled(false)// 是否开启声音,扫完码之后会"哔"的一声
+                                .setBarcodeImageEnabled(true)// 扫完码之后生成二维码的图片
+                                .initiateScan();// 初始化扫码
+                        break;
                 }
             }
         });
@@ -92,6 +104,12 @@ public class FunctionFragment extends BaseSPAFragment {
             Menu menu = new Menu();
             menu.setTitile("TakePhoto");
             menu.setIcon(R.mipmap.icon_fun_photo);
+            data.add(menu);
+        }
+        {
+            Menu menu = new Menu();
+            menu.setTitile("TakePhoto");
+            menu.setIcon(R.mipmap.icon_scanning);
             data.add(menu);
         }
 

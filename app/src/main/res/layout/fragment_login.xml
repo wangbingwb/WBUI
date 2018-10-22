@@ -1,29 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/icon_background">
+    android:background="@color/colorBackground">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="wrap_content"
+        android:background="@mipmap/icon_background"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="40"
+            android:gravity="center_horizontal|bottom"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@mipmap/icon_logo" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/margin_50"
+            android:layout_marginRight="@dimen/margin_50"
+            android:layout_weight="60"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llyUsername"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/form_size"
+                android:layout_marginBottom="@dimen/padding_10"
+                android:background="@drawable/ui_background_login"
+                android:orientation="horizontal">
+
+                <xyz.wbsite.wbsiteui.base.ui.image.WBUISquareImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_10"
+                    android:src="@mipmap/icon_username"
+                    app:weight_height="1"
+                    app:weight_width="1" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/margin_15"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:background="@color/colorPrimaryText"></View>
+
+                <EditText
+                    android:id="@+id/edtUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/form_size"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:paddingLeft="@dimen/padding_20"
+                    android:textColor="@color/colorPrimaryText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llyPassword"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/form_size"
+                android:layout_marginBottom="@dimen/padding_10"
+                android:background="@drawable/ui_background_login"
+                android:orientation="horizontal">
+
+                <xyz.wbsite.wbsiteui.base.ui.image.WBUISquareImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_10"
+                    android:src="@mipmap/icon_password"
+                    app:weight_height="1"
+                    app:weight_width="1" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/margin_15"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:background="@color/colorPrimaryText"></View>
+
+                <EditText
+                    android:id="@+id/edtPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/form_size"
+                    android:background="@null"
+                    android:inputType="numberPassword"
+                    android:paddingLeft="@dimen/padding_20"
+                    android:textColor="@color/colorPrimaryText" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/form_size"
+                android:layout_marginTop="@dimen/margin_30"
+                android:background="@drawable/ui_background_login_button"
+                android:text="登 录"
+                android:textColor="@color/colorPrimaryText"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_10">
 
-                <ImageView
+                <CheckBox
+                    android:id="@+id/chkPwd"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimaryText"
+                    android:text="记住密码"
+                    android:textColor="@color/colorPrimaryText" />
 
-
+                <CheckBox
+                    android:id="@+id/chkAuto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimaryText"
+                    android:text="自动登录"
+                    android:textColor="@color/colorPrimaryText" />
 
             </LinearLayout>
-        </RelativeLayout>
-    </FrameLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

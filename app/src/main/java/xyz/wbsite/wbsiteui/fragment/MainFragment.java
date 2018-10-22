@@ -44,7 +44,7 @@ public class MainFragment extends BaseSPAFragment {
         QMUITabSegment.Tab function1 = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_function),
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_function_select),
-                "UI", false
+                "功能", false
         );
         QMUITabSegment.Tab function2 = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_about),

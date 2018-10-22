@@ -3,10 +3,12 @@
     <color name="colorPrimary">@color/app_color_theme_10</color>
     <color name="colorPrimaryDark">#009cd2</color>
     <color name="colorTitle">@color/colorGray_10</color>
+    <color name="colorPrimaryText">@color/colorGray_10</color>
     <color name="colorBackground">@color/colorGray_10</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorImportant">#ff1418</color>
 
+    <color name="colorTranslucent">#2a000000</color>
     <color name="colorFromLabel">#404040</color>
     <color name="colorFromInput">#ffffffff</color>
     <color name="colorFromInputActive">#f4f4f4</color>

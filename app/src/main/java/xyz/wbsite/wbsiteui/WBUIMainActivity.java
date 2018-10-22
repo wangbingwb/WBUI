@@ -1,8 +1,13 @@
 package xyz.wbsite.wbsiteui;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 
@@ -42,17 +47,31 @@ public class WBUIMainActivity extends BaseSPAActivity {
     }
 
     private void startFirstFragment() {
-        MainFragment mainFragment = new MainFragment();
+        Fragment fragment = new LoginFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(getContextViewId(), mainFragment, mainFragment.getClass().getSimpleName())
-                .addToBackStack(mainFragment.getClass().getSimpleName())
+                .add(getContextViewId(), fragment, fragment.getClass().getSimpleName())
+                .addToBackStack(fragment.getClass().getSimpleName())
                 .commit();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
 
