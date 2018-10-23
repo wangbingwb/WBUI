@@ -278,6 +278,17 @@ public class DataBaseUtil {
         }
     }
 
+    public <T> void insertBitch(List<T> data) {
+        if (data == null || data.size() == 0) {
+            return;
+        }
+        writableDatabase.beginTransaction();
+        for (Object datum : data) {
+            insert(datum);
+        }
+        writableDatabase.setTransactionSuccessful();
+        writableDatabase.endTransaction();
+    }
 
     /**
      * 获取所有数据库对象
@@ -286,7 +297,7 @@ public class DataBaseUtil {
      */
     private List<Class> getObjects() {
         List<Class> list = new ArrayList<>();
-        list.add(DictSyncRecord.class);
+        list.add(Dict.class);
         return list;
     }
 
@@ -377,7 +388,7 @@ public class DataBaseUtil {
         }
     }
 
-    public static class DictSyncRecord {
+    public static class Dict {
         @DataBaseUtil.DBField("VARCHAR(20)")
         private String date;
 
