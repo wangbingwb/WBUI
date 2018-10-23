@@ -19,6 +19,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import xyz.wbsite.wbsiteui.WBUIApplication;
 import xyz.wbsite.wbsiteui.base.Content;
 
 public class DataBaseUtil {
@@ -26,46 +27,13 @@ public class DataBaseUtil {
     private String defaultDBName = "data.db";
     private SQLiteOpenHelper sqLiteOpenHelper;
     private SQLiteDatabase writableDatabase;
-
-    private class SQLiteOpenHelperImpl extends SQLiteOpenHelper {
-
-        public SQLiteOpenHelperImpl(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-            super(new DatabaseContext(context), name, factory, version);
-        }
-
-        public SQLiteOpenHelperImpl(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
-            super(context, name, factory, version, errorHandler);
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase sqLiteDatabase) {
-            List<Class> objects = getObjects();
-
-            for (Class object : objects) {
-                StringBuffer sql = new StringBuffer();
-                String name = object.getSimpleName();
-
-                sql.append("CREATE TABLE ");
-                sql.append(name);
-                sql.append(" (");
-                fillSql(object, sql);
-
-                sql.replace(sql.length() - 1, sql.length(), "");
-                sql.append(")");
-                sqLiteDatabase.execSQL(sql.toString());
-            }
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
-        }
-    }
+    private List<Class> entityList;
 
     private DataBaseUtil() {
     }
 
-    public DataBaseUtil(Context context) {
+    public DataBaseUtil(Context context, Register register) {
+        entityList = register.run();
         File ownCacheDirectory = StorageUtil.getOwnCacheDirectory(context, Content.DIR);
         defaultPath = ownCacheDirectory.getAbsolutePath();
         sqLiteOpenHelper = new SQLiteOpenHelperImpl(context, defaultDBName, null, 1);
@@ -79,7 +47,7 @@ public class DataBaseUtil {
     public <T> List<T> query(T t, int start, int size) {
         ArrayList<T> list = new ArrayList<>();
         try {
-            Class a = findObject(t);
+            Class a = findEntity(t);
             //1、获取表名
             String table = a.getSimpleName();
             //2、获取字段列表
@@ -163,11 +131,9 @@ public class DataBaseUtil {
         return list;
     }
 
-    public void delete(Object object) {
-        List<Class> objects = getObjects();
-
+    public <T> void delete(T t) {
         try {
-            Class aClass = findObject(object);
+            Class aClass = findEntity(t);
             //1、获取表名
             String table = aClass.getSimpleName();
             //2、获取字段列表
@@ -183,7 +149,7 @@ public class DataBaseUtil {
                 columns[i] = fs.get(i).getName().toUpperCase();
                 try {
                     fs.get(i).setAccessible(true);
-                    Object o = fs.get(i).get(object);
+                    Object o = fs.get(i).get(t);
                     if (o != null) {
                         where++;
                     }
@@ -202,7 +168,7 @@ public class DataBaseUtil {
                     columns[i] = fs.get(i).getName().toUpperCase();
                     try {
                         fs.get(i).setAccessible(true);
-                        Object o = fs.get(i).get(object);
+                        Object o = fs.get(i).get(t);
                         if (o != null) {
                             if ("".equals(selectionSB.toString())) {
                                 selectionSB.append(" ");
@@ -224,9 +190,9 @@ public class DataBaseUtil {
         }
     }
 
-    public void insert(Object object) {
+    public <T> void insert(T t) {
         try {
-            Class aClass = findObject(object);
+            Class aClass = findEntity(t);
             StringBuffer sql = new StringBuffer();
             String tableName = aClass.getSimpleName();
             sql.append("INSERT INTO ");
@@ -242,7 +208,7 @@ public class DataBaseUtil {
                     f.setAccessible(true);
                     try {
                         String value = "";
-                        Object o = f.get(object);
+                        Object o = f.get(t);
                         if (o instanceof String) {
                             value = (String) o;
                             valueSql.append(value);
@@ -291,23 +257,20 @@ public class DataBaseUtil {
     }
 
     /**
-     * 获取所有数据库对象
+     * 查找注册的实体
      *
+     * @param t
+     * @param <T>
      * @return
+     * @throws Exception
      */
-    private List<Class> getObjects() {
-        List<Class> list = new ArrayList<>();
-        list.add(Dict.class);
-        return list;
-    }
-
-    private Class findObject(Object object) throws Exception {
-        for (Class aClass : getObjects()) {
-            if (object.getClass() == aClass) {
+    private <T> Class findEntity(T t) throws Exception {
+        for (Class aClass : entityList) {
+            if (t.getClass() == aClass) {
                 return aClass;
             }
         }
-        throw new Exception("can not find DB Object:" + object.getClass().getName());
+        throw new Exception("can not find Entity:" + t.getClass().getName() + ", make sure it is registered");
     }
 
     /**
@@ -320,7 +283,7 @@ public class DataBaseUtil {
     }
 
     /**
-     * 利用字段注解填充sql
+     * 利用字段注解拼接sql
      *
      * @param mClass
      * @param sql
@@ -339,9 +302,43 @@ public class DataBaseUtil {
         }
     }
 
-    class DatabaseContext extends ContextWrapper {
+    private class SQLiteOpenHelperImpl extends SQLiteOpenHelper {
 
-        private static final String DEBUG_CONTEXT = "DatabaseContext";
+        public SQLiteOpenHelperImpl(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+            super(new DatabaseContext(context), name, factory, version);
+        }
+
+        public SQLiteOpenHelperImpl(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
+            super(context, name, factory, version, errorHandler);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase sqLiteDatabase) {
+            for (Class object : entityList) {
+                StringBuffer sql = new StringBuffer();
+                String name = object.getSimpleName();
+
+                sql.append("CREATE TABLE ");
+                sql.append(name);
+                sql.append(" (");
+                fillSql(object, sql);
+
+                sql.replace(sql.length() - 1, sql.length(), "");
+                sql.append(")");
+                sqLiteDatabase.execSQL(sql.toString());
+            }
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
+        }
+    }
+
+    /**
+     * 创建数据库辅助类,可以自定义数据库存放路径
+     */
+    class DatabaseContext extends ContextWrapper {
 
         public DatabaseContext(Context base) {
             super(base);
@@ -349,7 +346,7 @@ public class DataBaseUtil {
 
         @Override
         public File getDatabasePath(String name) {
-            if ("".equals(defaultPath)) {
+            if ("".equals(defaultPath)) {//defaultPath如果为""则放在程序默认位置
                 defaultPath = getApplicationContext().getDatabasePath("database").getAbsolutePath();
             }
 
@@ -388,16 +385,51 @@ public class DataBaseUtil {
         }
     }
 
-    public static class Dict {
-        @DataBaseUtil.DBField("VARCHAR(20)")
-        private String date;
+    interface Register {
+        List<Class> run();
+    }
 
-        public String getDate() {
-            return date;
+    /**
+     * 以下为Demo
+     * @param args
+     */
+    public static void main(String[] args) {
+        //Demo
+        DataBaseUtil db = new DataBaseUtil(WBUIApplication.getInstance(), new Register() {
+            @Override
+            public List<Class> run() {
+                List<Class> objects = new ArrayList<>();
+                objects.add(User.class);
+                return objects;
+            }
+        });
+        //插入数据
+        db.insert(new User("Test"));
+        //删除数据
+        db.delete(new User("Test"));
+        //查询数据(不分页)
+        db.query(new User("Test"));
+        //查询数据(分页)
+        db.query(new User("Test"),0,10);
+    }
+
+    /**
+     * Demo Entity
+     */
+    public static class User {
+        @DataBaseUtil.DBField("VARCHAR(20)")
+        private String name;
+
+        public String getName() {
+            return name;
         }
 
-        public void setDate(String date) {
-            this.date = date;
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public User(String name) {
+            this.name = name;
         }
     }
 }
