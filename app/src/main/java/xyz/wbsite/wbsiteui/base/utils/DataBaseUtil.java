@@ -385,7 +385,7 @@ public class DataBaseUtil {
         }
     }
 
-    interface Register {
+    public interface Register {
         List<Class> run();
     }
 

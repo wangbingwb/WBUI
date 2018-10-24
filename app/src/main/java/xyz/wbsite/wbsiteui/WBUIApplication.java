@@ -19,7 +19,9 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import xyz.wbsite.wbsiteui.base.utils.DataBaseUtil;
@@ -78,7 +80,12 @@ public class WBUIApplication extends Application implements Thread.UncaughtExcep
     }
 
     private void initDB() {
-        db = new DataBaseUtil(this);
+        db = new DataBaseUtil(this, new DataBaseUtil.Register() {
+            @Override
+            public List<Class> run() {
+                return new ArrayList<>();
+            }
+        });
     }
 
     private void initMap() {
