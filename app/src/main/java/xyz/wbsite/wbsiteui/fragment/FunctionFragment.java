@@ -73,6 +73,9 @@ public class FunctionFragment extends BaseSPAFragment {
                                 .setBarcodeImageEnabled(true)// 扫完码之后生成二维码的图片
                                 .initiateScan();// 初始化扫码
                         break;
+                    case R.mipmap.icon_fun_layout:
+                        startFragment(new xyz.wbsite.wbsiteui.fragment.functions.layout.MenuFragment());
+                        break;
                 }
             }
         });
@@ -110,6 +113,13 @@ public class FunctionFragment extends BaseSPAFragment {
             Menu menu = new Menu();
             menu.setTitile("TakePhoto");
             menu.setIcon(R.mipmap.icon_scanning);
+            data.add(menu);
+        }
+
+        {
+            Menu menu = new Menu();
+            menu.setTitile("Layout");
+            menu.setIcon(R.mipmap.icon_fun_layout);
             data.add(menu);
         }
 

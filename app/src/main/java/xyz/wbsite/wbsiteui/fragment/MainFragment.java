@@ -64,6 +64,7 @@ public class MainFragment extends BaseSPAFragment {
 
         pager.setAdapter(new BaseFragmentPagerAdapter(getActivity().getSupportFragmentManager()));
         tabs.setupWithViewPager(pager, false);
+        pager.setCurrentItem(1);
     }
 
     @Override
