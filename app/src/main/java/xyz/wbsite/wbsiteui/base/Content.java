@@ -12,5 +12,8 @@ public class Content {
     public static String AUTO_LOGIN = "auto_login";
 
     //文件存储目录
-    public static String DIR = "demo";
+    public static String DIR = "WBUI";
+
+    //图片存储目录
+    public static String DIR_IMG = "WBUI/temp";
 }
