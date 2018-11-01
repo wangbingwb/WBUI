@@ -3,25 +3,31 @@ package xyz.wbsite.wbsiteui.base.utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Criteria;
+import android.location.GpsSatellite;
+import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * GPS定位服务类，封装了GPS类的细节，只向用户暴露简单的start()和stop()两个方法。需要用户实现{@link IGPSCallback}接口中的方法
  * <p>
  * 使用方法： <br>
- * GPSService gpsService = new GPSService(gpsCallback, MainActivity.this, true);
+ * GPSUtil GPSUtil = new GPSUtil(gpsCallback, MainActivity.this, true);
  * <br>
- * gpsService.start();
- *
- * @see IGPSCallback
+ * GPSUtil.start();
  *
  * @author 优化设计，QQ:50199907 Email:yw1530@126.com
- *
+ * @see IGPSCallback
  */
 public class GPSUtil {
+    private String TAG = GPSUtil.class.getSimpleName();
     /**
      * GPS函数回调接口
      */
@@ -32,7 +38,7 @@ public class GPSUtil {
     private String provider;
 
     /**
-     * GPSService是否运行
+     * GPSUtil是否运行
      */
     private boolean isRun;
 
@@ -47,6 +53,11 @@ public class GPSUtil {
      * 自动停止
      */
     private boolean isAutoStop = false;
+
+    /**
+     * 是否调试
+     */
+    private boolean isTest = false;
 
     /**
      * 超时时间（秒）
@@ -100,10 +111,8 @@ public class GPSUtil {
     /**
      * 设置最后一次错误描述，该描述可以通过getError()方法获取。
      *
+     * @param error 错误说明
      * @see GPSUtil#getError()
-     *
-     * @param error
-     *            错误说明
      */
     private void setError(String error) {
         if (error == null)
@@ -112,38 +121,24 @@ public class GPSUtil {
     }
 
     /**
-     * GPSService构造函数
+     * GPSUtil构造函数
      *
-     * @param gpsCallback
-     *            回调函数接口
-     * @param context
-     *            Context
+     * @param gpsCallback 回调函数接口
+     * @param context     Context
      */
     public GPSUtil(IGPSCallback gpsCallback, Context context) {
-        super();
-        this.gpsCallback = gpsCallback;
-        loctionManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-
-        initCriteria();
-
-		/* 从可用的位置提供器中，匹配以上标准的最佳提供器 */
-        provider = loctionManager.getBestProvider(criteria, true);
+        this(gpsCallback, context, true);
     }
 
-    /**
-     * GPSService构造函数
-     *
-     * @param gpsCallback
-     *            回调函数接口
-     * @param context
-     *            Context
-     * @param isAutoStop
-     *            定位成功后是否自动停止GPS
-     */
     public GPSUtil(IGPSCallback gpsCallback, Context context, boolean isAutoStop) {
-        super();
+
+        this(gpsCallback, context, isAutoStop, false);
+    }
+
+    public GPSUtil(IGPSCallback gpsCallback, Context context, boolean isAutoStop, boolean isTest) {
         this.gpsCallback = gpsCallback;
         this.isAutoStop = isAutoStop;
+        this.isTest = isTest;
         loctionManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
         initCriteria();
@@ -164,9 +159,8 @@ public class GPSUtil {
     /**
      * 设置超时时间
      *
-     * @param outTime
-     *            超时时间（单位：秒，范围：10—600），只可在Start()方法调用前使用，默认180秒，如果小于10秒则超时无效，
-     *            只能手动调用Stop() 方法停止GPS。
+     * @param outTime 超时时间（单位：秒，范围：10—600），只可在Start()方法调用前使用，默认180秒，如果小于10秒则超时无效，
+     *                只能手动调用Stop() 方法停止GPS。
      */
     public void setOutTime(int outTime) {
         if (outTime >= 0 && outTime <= 600) {
@@ -184,7 +178,7 @@ public class GPSUtil {
         try {
             if (!loctionManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
                 // GPS没有打开
-                setError("GPS没有硬件打开");
+                setError("GPS未打开");
                 gpsCallback.failCallBack(IGPSCallback.ERROR_CLOSE);
                 return false;
             }
@@ -192,6 +186,35 @@ public class GPSUtil {
             // 注册监听函数
             if (locationListener != null) {
                 loctionManager.requestLocationUpdates(provider, 1000 * 10, accuracy, locationListener);
+            }
+
+            // 调试
+            if (isTest) {
+                loctionManager.addGpsStatusListener(new GpsStatus.Listener() {
+                    private List<GpsSatellite> numSatelliteList = new ArrayList();
+
+                    @Override
+                    public void onGpsStatusChanged(int event) {
+                        GpsStatus status = loctionManager.getGpsStatus(null); //取当前状态
+
+                        StringBuilder sb = new StringBuilder("");
+                        if (status == null) {
+                            sb.append("搜索到卫星个数：" + 0);
+                        } else if (event == GpsStatus.GPS_EVENT_SATELLITE_STATUS) {
+                            int maxSatellites = status.getMaxSatellites();
+                            Iterator<GpsSatellite> it = status.getSatellites().iterator();
+                            numSatelliteList.clear();
+                            int count = 0;
+                            while (it.hasNext() && count <= maxSatellites) {
+                                GpsSatellite s = it.next();
+                                numSatelliteList.add(s);
+                                count++;
+                            }
+                            sb.append("搜索到卫星个数：" + numSatelliteList.size());
+                        }
+                        Log.d(TAG, sb.toString());
+                    }
+                });
             }
 
             isRun = true;
@@ -257,10 +280,8 @@ public class GPSUtil {
      * GPS定位服务回调函数接口，需要实现{@link IGPSCallback#gpsCallback(Location location)}和
      * {@link IGPSCallback#failCallBack(String error)}方法
      *
-     * @see GPSUtil
-     *
      * @author 优化设计，QQ:50199907 Email:yw1530@126.com
-     *
+     * @see GPSUtil
      */
     public interface IGPSCallback {
         /**
@@ -281,18 +302,16 @@ public class GPSUtil {
         /**
          * GPS执行成功，返回Location时的回调函数
          *
-         * @param location
-         *            位置信息
+         * @param location 位置信息
          */
         void gpsCallback(Location location);
 
         /**
          * GPS错误时的回调函数 包括GPS无信号、GPS超时退出、GPS硬件没有打开
          *
-         * @param error
-         *            错误描述，一般为{@link IGPSCallback#ERROR_NO_SIGNAL}、
-         *            {@link IGPSCallback#ERROR_OUTTIME}、
-         *            {@link IGPSCallback#ERROR_CLOSE}。也可以由GPSService类自定义
+         * @param error 错误描述，一般为{@link IGPSCallback#ERROR_NO_SIGNAL}、
+         *              {@link IGPSCallback#ERROR_OUTTIME}、
+         *              {@link IGPSCallback#ERROR_CLOSE}。也可以由GPSUtil类自定义
          */
         void failCallBack(String error);
     }
