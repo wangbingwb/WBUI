@@ -96,7 +96,7 @@ public abstract class BaseSPAFragment extends QMUIFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (getArguments() == null) {
+        if (getArguments() == null && !isStateSaved()) {
             setArguments(new Bundle());
         }
         onDataSave(getArguments());
