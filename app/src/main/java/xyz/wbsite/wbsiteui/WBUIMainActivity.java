@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 
@@ -53,6 +54,16 @@ public class WBUIMainActivity extends BaseSPAActivity {
                 .add(getContextViewId(), fragment, fragment.getClass().getSimpleName())
                 .addToBackStack(fragment.getClass().getSimpleName())
                 .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        QMUIFragment fragment = getCurrentFragment();
+        if (fragment instanceof HomeFragment) {
+            WBUIApplication.getInstance().exit();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
