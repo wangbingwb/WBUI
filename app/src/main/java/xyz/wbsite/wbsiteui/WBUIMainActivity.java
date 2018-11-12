@@ -18,6 +18,7 @@ import xyz.wbsite.wbsiteui.base.BaseSPAActivity;
 import xyz.wbsite.wbsiteui.fragment.HomeFragment;
 import xyz.wbsite.wbsiteui.fragment.LoginFragment;
 import xyz.wbsite.wbsiteui.fragment.MainFragment;
+import xyz.wbsite.wbsiteui.fragment.functions.AverageTextViewFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.listView.WBUIPaternalLayoutFragment;
 
 public class WBUIMainActivity extends BaseSPAActivity {
@@ -48,7 +49,7 @@ public class WBUIMainActivity extends BaseSPAActivity {
     }
 
     private void startFirstFragment() {
-        Fragment fragment = new LoginFragment();
+        Fragment fragment = new AverageTextViewFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(getContextViewId(), fragment, fragment.getClass().getSimpleName())
