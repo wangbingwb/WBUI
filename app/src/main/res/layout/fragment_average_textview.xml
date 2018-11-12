@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ui_background">
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:qmui_topbar_separator_color="@color/colorGray_10"
+        app:qmui_topbar_separator_height="0dp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <xyz.wbsite.wbsiteui.base.ui.textview.AverageTextView
+                android:layout_width="150dp"
+                android:text="测试"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryText"
+                android:layout_height="wrap_content" />
+            <xyz.wbsite.wbsiteui.base.ui.textview.AverageTextView
+                android:layout_width="150dp"
+                android:text="测测试"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryText"
+                android:layout_height="wrap_content" />
+            <xyz.wbsite.wbsiteui.base.ui.textview.AverageTextView
+                android:layout_width="150dp"
+                android:text="测测试试"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryText"
+                android:layout_height="wrap_content" />
+            <xyz.wbsite.wbsiteui.base.ui.textview.AverageTextView
+                android:layout_width="150dp"
+                android:text="测测试试试"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryText"
+                android:layout_height="wrap_content" />
+
+            <xyz.wbsite.wbsiteui.base.ui.textview.AverageTextView
+                android:padding="@dimen/padding_10"
+                android:layout_width="150dp"
+                android:text="测试"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryText"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
