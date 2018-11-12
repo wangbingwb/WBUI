@@ -17,7 +17,6 @@ public class AverageTextView extends android.support.v7.widget.AppCompatTextView
         super(context, attrs);
     }
 
-
     @Override
     protected void onDraw(Canvas canvas) {
         TextPaint paint = getPaint();
@@ -47,7 +46,7 @@ public class AverageTextView extends android.support.v7.widget.AppCompatTextView
 
             // 如果大于2个才均分
             if (mText.length() > 2) {
-                float remainingWidth = width - getPaddingLeft() - getPaddingRight() - firstF_W / 2 - lastF_W / 2;//剩余宽度
+                float remainingWidth = width - firstF_W / 2 - lastF_W / 2;//剩余宽度
                 float averageW = remainingWidth / (mText.length() - 2 + 1);//等分距离
 
                 for (int i = 1; i < mText.length() - 1; i++) {//循环绘文字
