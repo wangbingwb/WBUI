@@ -93,6 +93,8 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
         void onChange(View view, int currentHeight, int pullHeight, boolean isNearHeight);
 
         void onAction(View view, int pullHeight, WBUIPaternalLayout layout);
+
+        void onFinish(View view);
     }
 
     public interface IPushViewBuilder {
@@ -101,6 +103,8 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
         void onChange(View view, int currentHeight, int pushHeight, boolean isNearHeight);
 
         void onAction(View view, int pushHeight, WBUIPaternalLayout layout);
+
+        void onFinish(View view);
     }
 
     public void setPullViewBuilder(IPullViewBuilder pullViewBuilder) {
@@ -338,9 +342,11 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
 
     public void finish() {
         if (pullOffset > 0) {
+            pullViewBuilder.onFinish(mPullView);
             mScroller.startScroll(0, 0, 0, pullOffset, 800);
             postInvalidate();
         } else if (pushOffset > 0) {
+            pushViewBuilder.onFinish(mPullView);
             mScroller.startScroll(0, 0, 0, pushOffset, 800);
             postInvalidate();
         }

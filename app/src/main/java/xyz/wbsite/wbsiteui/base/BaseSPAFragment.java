@@ -102,6 +102,11 @@ public abstract class BaseSPAFragment extends QMUIFragment {
         onDataSave(getArguments());
     }
 
+    @Override
+    protected boolean canDragBack() {
+        return false;
+    }
+
     protected void onDataSave(Bundle data) {
 
     }

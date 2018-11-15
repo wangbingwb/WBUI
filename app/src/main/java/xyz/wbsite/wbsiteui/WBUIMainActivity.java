@@ -20,6 +20,7 @@ import xyz.wbsite.wbsiteui.fragment.LoginFragment;
 import xyz.wbsite.wbsiteui.fragment.MainFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.AverageTextViewFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.listView.WBUIPaternalLayoutFragment;
+import xyz.wbsite.wbsiteui.fragment.functions.other.OtherFragment;
 
 public class WBUIMainActivity extends BaseSPAActivity {
     private static final String KEY_FRAGMENT = "key_fragment";
@@ -49,7 +50,7 @@ public class WBUIMainActivity extends BaseSPAActivity {
     }
 
     private void startFirstFragment() {
-        Fragment fragment = new AverageTextViewFragment();
+        Fragment fragment = new OtherFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(getContextViewId(), fragment, fragment.getClass().getSimpleName())
