@@ -54,6 +54,8 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
     int width = 0;
     int height = 0;
 
+    int mTouchSlop = 4;
+
     @Override
     public void onViewAdded(View child) {
         int maxChild = 1 + (mPullView != null ? 1 : 0) + (mPushView != null ? 1 : 0);
@@ -81,10 +83,6 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
 
         ViewCompat.setChildrenDrawingOrderEnabled(this, true);
         mNestedScrollingParentHelper = new NestedScrollingParentHelper(this);
-    }
-
-    public interface Notify {
-        void finish();
     }
 
     public interface IPullViewBuilder {
@@ -267,6 +265,10 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
                 final float y = ev.getY();
                 float dy = (y - mLastMotionY) * mDragRate;
 
+                if (Math.abs(dy) < mTouchSlop) {
+                    return false;
+                }
+
                 if (mIsPull && pullViewBuilder != null && mPullView != null) {
                     pullOffset += dy;
                     if (pullOffset > pullHeight) {
@@ -364,6 +366,7 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
                     pullOffset = 0;
                     mScroller.abortAnimation();
                 }
+                mPullView.setLayoutParams(new LayoutParams(width, pullOffset));
                 mPullView.layout(0, 0, width, pullOffset);
                 postInvalidate();
             } else if (pushOffset > 0) {
@@ -372,6 +375,7 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
                     pushOffset = 0;
                     mScroller.abortAnimation();
                 }
+                mPushView.setLayoutParams(new LayoutParams(width, pushOffset));
                 mPushView.layout(0, height - pushOffset, width, height);
                 postInvalidate();
             } else {

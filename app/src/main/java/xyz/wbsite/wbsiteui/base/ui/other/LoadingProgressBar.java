@@ -65,18 +65,17 @@ public class LoadingProgressBar extends View {
         int width = getWidth();
         int height = getHeight();
         int radius = Math.min(width, height) / 2;
-        if (radius >= shadowWidth) {
+        if (radius >= shadowWidth + backgroundWidth) {
             RadialGradient radialGradient = new RadialGradient(width / 2, height / 2, radius, new int[]{Color.GRAY, Color.TRANSPARENT}, null, Shader.TileMode.CLAMP);
             mShadowPaint.setShader(radialGradient);
             canvas.drawCircle(width / 2, height / 2, radius, mShadowPaint);
-        }
 
-        if (radius >= shadowWidth + backgroundWidth) {
             mPaint.setColor(Color.WHITE);
             mPaint.setStyle(Paint.Style.FILL);
             mPaint.setAntiAlias(true);
             canvas.drawCircle(width / 2, height / 2, radius - shadowWidth, mPaint);
         }
+
 
         if (radius >= shadowWidth + backgroundWidth + indicatorWidth) {
             mPaint.setColor(Color.RED);
