@@ -54,7 +54,7 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
     int width = 0;
     int height = 0;
 
-    int mTouchSlop = 4;
+    int mTouchSlop = 2;
 
     @Override
     public void onViewAdded(View child) {
@@ -275,8 +275,8 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
                         pullOffset = pullHeight;
                     }
                     pullViewBuilder.onChange(mPullView, pullOffset, pullHeight, pullOffset >= pullHeight - mTheshold);
-                    mPullView.setLayoutParams(new LayoutParams(width, pullOffset));
-                    mPullView.layout(0, 0, width, pullOffset);
+                    mPullView.setLayoutParams(new LayoutParams(width, pullHeight));
+                    mPullView.layout(0, pullOffset - pullHeight, width, pullOffset);
                     postInvalidate();
                 }
                 if (mIsPush && pushViewBuilder != null && mPushView != null) {
@@ -292,8 +292,8 @@ public class WBUIPaternalLayout extends ViewGroup implements NestedScrollingPare
                     final int width = getMeasuredWidth();
                     final int height = getMeasuredHeight();
                     pushViewBuilder.onChange(mPushView, pushOffset, pushHeight, pushOffset >= pushHeight - mTheshold);
-                    mPushView.setLayoutParams(new LayoutParams(width, pushOffset));
-                    mPushView.layout(0, height - pushOffset, width, height);
+                    mPushView.setLayoutParams(new LayoutParams(width, pushHeight));
+                    mPushView.layout(0, height - pushOffset, width, height - pushOffset + pushHeight);
                     postInvalidate();
                 }
                 break;

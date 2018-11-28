@@ -50,7 +50,7 @@ public class WBUIMainActivity extends BaseSPAActivity {
     }
 
     private void startFirstFragment() {
-        Fragment fragment = new OtherFragment();
+        Fragment fragment = new WBUIPaternalLayoutFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(getContextViewId(), fragment, fragment.getClass().getSimpleName())
