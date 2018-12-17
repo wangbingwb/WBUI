@@ -15,7 +15,9 @@
 
         <item name="qmui_tab_sign_count_view">@style/qmui_tab_sign_count_view</item>
         <item name="qmui_tab_sign_count_view_minSize">@dimen/qmui_tab_sign_count_view_minSize</item>
-        <item name="qmui_tab_sign_count_view_minSize_with_text">@dimen/qmui_tab_sign_count_view_minSize_with_text</item>
+        <item name="qmui_tab_sign_count_view_minSize_with_text">
+            @dimen/qmui_tab_sign_count_view_minSize_with_text
+        </item>
         <item name="qmui_tab_sign_count_view_bg">@drawable/qmui_sign_count_view_bg</item>
         <item name="qmui_tab_sign_count_view_padding_horizontal">4dp</item>
 
@@ -52,9 +54,17 @@
         <item name="qmui_topbar_text_btn_text_size">16sp</item>
     </style>
 
-    <style name="dialogWindowAnim" parent="android:Animation" mce_bogus="1">
+    <style name="dialogWindowAnim" mce_bogus="1" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/slide_in_right</item>
         <item name="android:windowExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+    <!-- Activity启动退出动画 -->
+    <style name="ActivityAnim_RightInRightOutAnim" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
 </resources>
