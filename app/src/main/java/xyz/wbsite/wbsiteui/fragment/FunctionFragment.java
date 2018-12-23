@@ -21,6 +21,7 @@ import xyz.wbsite.wbsiteui.activity.QRcodeActivity;
 import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.BackPhotoFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.TakePhotoFragment;
+import xyz.wbsite.wbsiteui.fragment.functions.imageview.ImageViewFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.listView.MenuFragment;
 
 public class FunctionFragment extends BaseSPAFragment {
@@ -63,6 +64,9 @@ public class FunctionFragment extends BaseSPAFragment {
                         break;
                     case R.mipmap.icon_fun_photo:
                         startFragment(new TakePhotoFragment());
+                        break;
+                    case R.mipmap.icon_fun_imgview:
+                        startFragment(new ImageViewFragment());
                         break;
                     case R.mipmap.icon_scanning:
                         new IntentIntegrator(getActivity())
@@ -130,6 +134,13 @@ public class FunctionFragment extends BaseSPAFragment {
             Menu menu = new Menu();
             menu.setTitile("BackPhoto");
             menu.setIcon(R.mipmap.icon_backphoto);
+            data.add(menu);
+        }
+
+        {
+            Menu menu = new Menu();
+            menu.setTitile("ImageView");
+            menu.setIcon(R.mipmap.icon_fun_imgview);
             data.add(menu);
         }
 

@@ -20,9 +20,4 @@ public class Fragment extends BaseSPAFragment {
     protected void initView() {
 
     }
-
-    @Override
-    protected boolean canDragBack() {
-        return false;
-    }
 }
