@@ -19,6 +19,7 @@ import butterknife.BindView;
 import xyz.wbsite.wbsiteui.R;
 import xyz.wbsite.wbsiteui.activity.QRcodeActivity;
 import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
+import xyz.wbsite.wbsiteui.fragment.functions.BackPhotoFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.TakePhotoFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.listView.MenuFragment;
 
@@ -75,6 +76,8 @@ public class FunctionFragment extends BaseSPAFragment {
                         break;
                     case R.mipmap.icon_fun_layout:
                         startFragment(new xyz.wbsite.wbsiteui.fragment.functions.layout.MenuFragment());
+                    case R.mipmap.icon_backphoto:
+                        startFragment(new BackPhotoFragment());
                         break;
                 }
             }
@@ -120,6 +123,13 @@ public class FunctionFragment extends BaseSPAFragment {
             Menu menu = new Menu();
             menu.setTitile("Layout");
             menu.setIcon(R.mipmap.icon_fun_layout);
+            data.add(menu);
+        }
+
+        {
+            Menu menu = new Menu();
+            menu.setTitile("BackPhoto");
+            menu.setIcon(R.mipmap.icon_backphoto);
             data.add(menu);
         }
 

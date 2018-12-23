@@ -77,6 +77,11 @@ public abstract class BaseSPAFragment extends QMUIFragment {
 
     protected abstract void initView();
 
+    @Override
+    protected boolean canDragBack() {
+        return false;
+    }
+
     public void showLoading() {
         BaseSPAActivity activity = (BaseSPAActivity) getActivity();
         activity.showLoading();
