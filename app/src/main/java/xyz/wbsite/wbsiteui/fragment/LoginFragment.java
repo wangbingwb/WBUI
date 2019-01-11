@@ -1,17 +1,12 @@
 package xyz.wbsite.wbsiteui.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import xyz.wbsite.wbsiteui.R;
 import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
 
@@ -49,7 +44,7 @@ public class LoginFragment extends BaseSPAFragment {
                         closeLoading();
                         startFragment(new MainFragment());
                     }
-                },500);
+                }, 500);
             }
         });
 
