@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.leon.lfilepickerlibrary.utils.Constant;
 import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
@@ -15,6 +16,7 @@ import com.yanzhenjie.permission.AndPermission;
 import java.util.List;
 
 import xyz.wbsite.wbsiteui.base.BaseSPAActivity;
+import xyz.wbsite.wbsiteui.base.Consant;
 import xyz.wbsite.wbsiteui.fragment.HomeFragment;
 import xyz.wbsite.wbsiteui.fragment.LoginFragment;
 import xyz.wbsite.wbsiteui.fragment.MainFragment;
@@ -75,15 +77,19 @@ public class WBUIMainActivity extends BaseSPAActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            if (result.getContents() == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+        if (requestCode == Consant.REQUESTCODE_FROM_FRAGMENT) {
+            Toast.makeText(getApplicationContext(), "选中了个文件", Toast.LENGTH_SHORT).show();
+        }else {
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            if (result != null) {
+                if (result.getContents() == null) {
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                }
             } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                super.onActivityResult(requestCode, resultCode, data);
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 }

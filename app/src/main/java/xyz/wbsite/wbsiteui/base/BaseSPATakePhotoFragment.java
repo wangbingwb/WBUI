@@ -28,7 +28,7 @@ import java.io.OutputStream;
 
 import xyz.wbsite.wbsiteui.base.utils.StorageUtil;
 
-import static xyz.wbsite.wbsiteui.base.Content.DIR_IMG;
+import static xyz.wbsite.wbsiteui.base.Consant.DIR_IMG;
 
 
 public abstract class BaseSPATakePhotoFragment extends BaseSPAFragment implements TakePhoto.TakeResultListener, InvokeListener {

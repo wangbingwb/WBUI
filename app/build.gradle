@@ -11,6 +11,10 @@ android {
         multiDexEnabled true
     }
     buildTypes {
+        debug {
+            minifyEnabled false // 混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -31,14 +35,16 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //拍照，相册
-    compile 'com.jph.takephoto:takephoto_library:4.0.3'
+    implementation 'com.jph.takephoto:takephoto_library:4.0.3'
     //图片查看
-    compile 'com.github.chrisbanes:PhotoView:1.2.6'
+    implementation 'com.github.chrisbanes:PhotoView:1.2.6'
     //权限申请框架
-    compile 'com.yanzhenjie:permission:2.0.0-rc12'
+    implementation 'com.yanzhenjie:permission:2.0.0-rc12'
     //二维码
-    compile 'com.google.zxing:core:3.3.2'
-    compile('com.journeyapps:zxing-android-embedded:3.6.0')
+    implementation 'com.google.zxing:core:3.3.2'
+    implementation'com.journeyapps:zxing-android-embedded:3.6.0'
+    //文件选择
+    implementation 'com.leon:lfilepickerlibrary:1.0'
 
     //leak
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'

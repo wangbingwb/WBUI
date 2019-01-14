@@ -3,7 +3,7 @@ package xyz.wbsite.wbsiteui.base;
 /**
  * 内容辅助类
  */
-public class Content {
+public class Consant {
 
     //是否记住密码
     public static String REMEMBER_PASSWORD = "remember_password";
@@ -16,4 +16,6 @@ public class Content {
 
     //图片存储目录
     public static String DIR_IMG = "WBUI/temp";
+
+    public static int REQUESTCODE_FROM_FRAGMENT = 1;
 }

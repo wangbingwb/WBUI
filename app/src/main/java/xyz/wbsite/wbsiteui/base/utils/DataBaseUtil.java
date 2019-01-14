@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.wbsite.wbsiteui.WBUIApplication;
-import xyz.wbsite.wbsiteui.base.Content;
+import xyz.wbsite.wbsiteui.base.Consant;
 
 public class DataBaseUtil {
     private String defaultPath = "";
@@ -34,7 +34,7 @@ public class DataBaseUtil {
 
     public DataBaseUtil(Context context, Register register) {
         entityList = register.run();
-        File ownCacheDirectory = StorageUtil.getOwnCacheDirectory(context, Content.DIR);
+        File ownCacheDirectory = StorageUtil.getOwnCacheDirectory(context, Consant.DIR);
         defaultPath = ownCacheDirectory.getAbsolutePath();
         sqLiteOpenHelper = new SQLiteOpenHelperImpl(context, defaultDBName, null, 1);
         writableDatabase = sqLiteOpenHelper.getWritableDatabase();

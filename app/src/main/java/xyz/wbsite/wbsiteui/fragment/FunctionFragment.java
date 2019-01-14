@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.leon.lfilepickerlibrary.LFilePicker;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import butterknife.BindView;
 import xyz.wbsite.wbsiteui.R;
 import xyz.wbsite.wbsiteui.activity.QRcodeActivity;
 import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
+import xyz.wbsite.wbsiteui.base.Consant;
 import xyz.wbsite.wbsiteui.fragment.functions.BackPhotoFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.TakePhotoFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.imageview.ImageViewFragment;
@@ -83,6 +85,13 @@ public class FunctionFragment extends BaseSPAFragment {
                     case R.mipmap.icon_backphoto:
                         startFragment(new BackPhotoFragment());
                         break;
+                    case R.mipmap.icon_fun_file:
+
+                        new LFilePicker().withSupportFragment(FunctionFragment.this)
+                                .withRequestCode(Consant.REQUESTCODE_FROM_FRAGMENT)
+                                .withTitle("Open From Fragment")
+                                .start();
+                        break;
                 }
             }
         });
@@ -141,6 +150,12 @@ public class FunctionFragment extends BaseSPAFragment {
             Menu menu = new Menu();
             menu.setTitile("ImageView");
             menu.setIcon(R.mipmap.icon_fun_imgview);
+            data.add(menu);
+        }
+        {
+            Menu menu = new Menu();
+            menu.setTitile("File Select");
+            menu.setIcon(R.mipmap.icon_fun_file);
             data.add(menu);
         }
 
