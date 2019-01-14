@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.leon.lfilepickerlibrary.utils.Constant;
 import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
@@ -18,11 +17,7 @@ import java.util.List;
 import xyz.wbsite.wbsiteui.base.BaseSPAActivity;
 import xyz.wbsite.wbsiteui.base.Consant;
 import xyz.wbsite.wbsiteui.fragment.HomeFragment;
-import xyz.wbsite.wbsiteui.fragment.LoginFragment;
 import xyz.wbsite.wbsiteui.fragment.MainFragment;
-import xyz.wbsite.wbsiteui.fragment.functions.AverageTextViewFragment;
-import xyz.wbsite.wbsiteui.fragment.functions.listView.WBUIPaternalLayoutFragment;
-import xyz.wbsite.wbsiteui.fragment.functions.other.OtherFragment;
 
 public class WBUIMainActivity extends BaseSPAActivity {
     private static final String KEY_FRAGMENT = "key_fragment";

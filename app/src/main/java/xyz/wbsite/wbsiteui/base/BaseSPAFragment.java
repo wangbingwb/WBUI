@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -100,6 +101,14 @@ public abstract class BaseSPAFragment extends QMUIFragment {
             setArguments(new Bundle());
         }
         onDataSave(getArguments());
+    }
+
+    public void startForResult(Intent intent, IActivityResult activityResult) {
+        FragmentActivity activity = getActivity();
+        if (activity instanceof BaseSPAActivity){
+            BaseSPAActivity baseSPAActivity = (BaseSPAActivity) activity;
+            baseSPAActivity.startForResult(intent,activityResult);
+        }
     }
 
     @Override

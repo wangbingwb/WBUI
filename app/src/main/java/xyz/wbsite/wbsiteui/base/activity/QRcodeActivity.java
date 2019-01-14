@@ -1,14 +1,10 @@
-package xyz.wbsite.wbsiteui.activity;
+package xyz.wbsite.wbsiteui.base.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.KeyEvent;
-import android.widget.Toast;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 

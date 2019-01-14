@@ -1,5 +1,6 @@
 package xyz.wbsite.wbsiteui.fragment;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.leon.lfilepickerlibrary.LFilePicker;
+import com.leon.lfilepickerlibrary.utils.Constant;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.util.ArrayList;
@@ -18,9 +19,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import xyz.wbsite.wbsiteui.R;
-import xyz.wbsite.wbsiteui.activity.QRcodeActivity;
 import xyz.wbsite.wbsiteui.base.BaseSPAFragment;
-import xyz.wbsite.wbsiteui.base.Consant;
+import xyz.wbsite.wbsiteui.base.IActivityResult;
+import xyz.wbsite.wbsiteui.base.activity.FilePickerActivity;
+import xyz.wbsite.wbsiteui.base.activity.QRcodeActivity;
+import xyz.wbsite.wbsiteui.base.utils.Toaster;
 import xyz.wbsite.wbsiteui.fragment.functions.BackPhotoFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.TakePhotoFragment;
 import xyz.wbsite.wbsiteui.fragment.functions.imageview.ImageViewFragment;
@@ -86,11 +89,15 @@ public class FunctionFragment extends BaseSPAFragment {
                         startFragment(new BackPhotoFragment());
                         break;
                     case R.mipmap.icon_fun_file:
-
-                        new LFilePicker().withSupportFragment(FunctionFragment.this)
-                                .withRequestCode(Consant.REQUESTCODE_FROM_FRAGMENT)
-                                .withTitle("Open From Fragment")
-                                .start();
+                        startForResult(new Intent(getActivity(), FilePickerActivity.class), new IActivityResult() {
+                            @Override
+                            public void onResult(int resultCode, Intent data) {
+                                if (data != null){
+                                    List<String> list = data.getStringArrayListExtra(Constant.RESULT_INFO);
+                                    Toaster.showToast("选中了" + list.size() + "个文件");
+                                }
+                            }
+                        });
                         break;
                 }
             }

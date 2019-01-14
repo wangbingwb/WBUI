@@ -116,8 +116,10 @@
             </intent-filter>
         </activity>
 
+        <!--文件选择器-->
+        <activity android:name=".base.activity.FilePickerActivity" />
         <!--二维码Activity-->
-        <activity android:name=".activity.QRcodeActivity" />
+        <activity android:name=".base.activity.QRcodeActivity" />
         <!--重启服务-->
         <service android:name=".base.services.RestartService" />
 
