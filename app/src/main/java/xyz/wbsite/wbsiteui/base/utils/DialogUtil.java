@@ -48,4 +48,24 @@ public class DialogUtil {
                 .create(com.qmuiteam.qmui.R.style.QMUI_Dialog);
         qmuiDialog.show();
     }
+
+    /**
+     * 展示一个信息弹窗
+     *
+     * @param context
+     * @param title   标题
+     * @param message 消息内容
+     */
+    public static void showMessage(Context context, String title, String message) {
+        new QMUIDialog.MessageDialogBuilder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .addAction("确认", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .create(com.qmuiteam.qmui.R.style.QMUI_Dialog).show();
+    }
 }
