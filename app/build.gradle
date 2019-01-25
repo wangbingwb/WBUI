@@ -45,6 +45,8 @@ dependencies {
     implementation'com.journeyapps:zxing-android-embedded:3.6.0'
     //文件选择
     implementation 'com.leon:lfilepickerlibrary:1.7.0'
+    //Picker
+    implementation 'com.github.gzu-liyujiang.AndroidPicker:WheelPicker:1.5.6'
 
     //leak
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
