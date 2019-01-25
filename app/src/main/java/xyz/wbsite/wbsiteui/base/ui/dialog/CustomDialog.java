@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-/**
- * Created by YiSD on 2015/11/23.
- */
 public class CustomDialog extends Dialog {
     public CustomDialog(Context context) {
         super(context);
