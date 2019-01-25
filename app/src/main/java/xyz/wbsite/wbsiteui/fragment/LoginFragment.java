@@ -33,7 +33,7 @@ public class LoginFragment extends BaseSPAFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void onViewInit() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -65,7 +65,7 @@ public class TakePhotoFragment extends BaseSPAFragment implements TakePhoto.Take
     }
 
     @Override
-    protected void initView() {
+    protected void onViewInit() {
         topbar.setTitle("拍照");
 
         takeFromCameraBtn.setOnClickListener(new View.OnClickListener() {

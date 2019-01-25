@@ -24,7 +24,7 @@ public class MenuFragment extends BaseSPAFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void onViewInit() {
         initGroupListView();
     }
 

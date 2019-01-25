@@ -55,19 +55,12 @@ public abstract class BaseSPAFragment extends QMUIFragment {
     protected View onCreateView() {
         View inflate = LayoutInflater.from(getActivity()).inflate(getFragmnetLayout(), null);
         unbinder = ButterKnife.bind(this, inflate);
-        initView();
-        if (getArguments() != null) {
-            onDataRecovery(getArguments());
+        onViewInit();
+        if (getArguments() == null) {
+            setArguments(new Bundle());
         }
+        onDataRecovery(getArguments());
         return inflate;
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if (getArguments() != null) {
-            onDataRecovery(getArguments());
-        }
     }
 
     @Override
@@ -76,7 +69,27 @@ public abstract class BaseSPAFragment extends QMUIFragment {
         unbinder.unbind();
     }
 
-    protected abstract void initView();
+    /**
+     * 初始化View，事件等
+     */
+    protected abstract void onViewInit();
+
+    /**
+     * 保存数据
+     *
+     * @param data
+     */
+    protected void onDataSave(Bundle data) {
+    }
+
+    /**
+     * 恢复数据
+     *
+     * @param data
+     */
+    protected void onDataRecovery(Bundle data) {
+
+    }
 
     public void showLoading() {
         BaseSPAActivity activity = (BaseSPAActivity) getActivity();
@@ -95,32 +108,27 @@ public abstract class BaseSPAFragment extends QMUIFragment {
     }
 
     @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        onDataRecovery(getArguments());
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (getArguments() == null && !isStateSaved()) {
-            setArguments(new Bundle());
-        }
         onDataSave(getArguments());
     }
 
     public void startForResult(Intent intent, IActivityResult activityResult) {
         FragmentActivity activity = getActivity();
-        if (activity instanceof BaseSPAActivity){
+        if (activity instanceof BaseSPAActivity) {
             BaseSPAActivity baseSPAActivity = (BaseSPAActivity) activity;
-            baseSPAActivity.startForResult(intent,activityResult);
+            baseSPAActivity.startForResult(intent, activityResult);
         }
     }
 
     @Override
     protected boolean canDragBack() {
         return false;
-    }
-
-    protected void onDataSave(Bundle data) {
-
-    }
-
-    protected void onDataRecovery(Bundle data) {
-
     }
 }

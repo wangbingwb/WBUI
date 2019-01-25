@@ -49,7 +49,7 @@ public class FunctionFragment extends BaseSPAFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void onViewInit() {
 
         topbar.setTitle("功能列表");
 

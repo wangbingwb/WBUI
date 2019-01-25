@@ -64,7 +64,7 @@ public class BackPhotoFragment extends BaseSPAFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void onViewInit() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             // your code using Camera API here - is between 1-20
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

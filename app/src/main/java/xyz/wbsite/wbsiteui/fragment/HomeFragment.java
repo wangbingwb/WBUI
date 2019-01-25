@@ -17,7 +17,7 @@ public class HomeFragment extends BaseSPAFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void onViewInit() {
         topbar.setTitle("主页");
     }
 

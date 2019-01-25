@@ -17,7 +17,7 @@ public class WBUISquareLayoutFragment extends BaseSPAFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void onViewInit() {
 
     }
 

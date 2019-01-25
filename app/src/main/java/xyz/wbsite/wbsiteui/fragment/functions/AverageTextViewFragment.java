@@ -17,7 +17,7 @@ public class AverageTextViewFragment extends BaseSPAFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void onViewInit() {
 
     }
 

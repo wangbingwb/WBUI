@@ -30,7 +30,7 @@ public class MainFragment extends BaseSPAFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void onViewInit() {
         initTabs();
         initPagers();
     }

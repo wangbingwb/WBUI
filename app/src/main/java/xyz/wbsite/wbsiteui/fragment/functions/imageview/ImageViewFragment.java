@@ -13,7 +13,7 @@ public class ImageViewFragment extends BaseSPAFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void onViewInit() {
         QMUIDisplayHelper.setFullScreen(getActivity());
     }
 }

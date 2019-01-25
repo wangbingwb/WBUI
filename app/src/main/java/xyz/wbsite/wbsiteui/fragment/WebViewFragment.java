@@ -32,7 +32,7 @@ public class WebViewFragment extends BaseSPAFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void onViewInit() {
         initWebView("http://192.168.1.103:8080/wap/index#/");
     }
 

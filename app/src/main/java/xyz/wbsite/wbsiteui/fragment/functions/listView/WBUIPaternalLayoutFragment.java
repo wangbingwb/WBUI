@@ -25,7 +25,7 @@ public class WBUIPaternalLayoutFragment extends BaseSPAFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void onViewInit() {
         paternalLayout.setPullViewBuilder(new WBUIPaternalLayout.IPullViewBuilder() {
             LoadingProgressBar progressBar;
 
