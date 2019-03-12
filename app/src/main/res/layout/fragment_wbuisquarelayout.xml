@@ -35,13 +35,13 @@
                     android:background="@color/colorGray_09"
                     android:layout_width="match_parent"
                     android:layout_height="80dp">
-                    <xyz.wbsite.wbsiteui.base.ui.layout.WBUISquareLayout
+                    <xyz.wbsite.wbui.base.ui.layout.WBUISquareLayout
                         android:background="@color/colorAccent"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent">
 
 
-                    </xyz.wbsite.wbsiteui.base.ui.layout.WBUISquareLayout>
+                    </xyz.wbsite.wbui.base.ui.layout.WBUISquareLayout>
                 </FrameLayout>
 
                 <TextView
@@ -55,12 +55,12 @@
                     android:layout_height="150dp"
                     android:background="@color/colorGray_08">
 
-                    <xyz.wbsite.wbsiteui.base.ui.layout.WBUISquareLayout
+                    <xyz.wbsite.wbui.base.ui.layout.WBUISquareLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorAccent">
 
-                    </xyz.wbsite.wbsiteui.base.ui.layout.WBUISquareLayout>
+                    </xyz.wbsite.wbui.base.ui.layout.WBUISquareLayout>
                 </FrameLayout>
 
                 <TextView
@@ -69,7 +69,7 @@
                     android:layout_marginTop="@dimen/margin_10"
                     android:text="根据内容高度确定" />
 
-                <xyz.wbsite.wbsiteui.base.ui.layout.WBUISquareLayout
+                <xyz.wbsite.wbui.base.ui.layout.WBUISquareLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/colorAccent">
@@ -80,7 +80,7 @@
                         android:layout_height="40dp"
                         android:background="@color/app_color_theme_6" />
 
-                </xyz.wbsite.wbsiteui.base.ui.layout.WBUISquareLayout>
+                </xyz.wbsite.wbui.base.ui.layout.WBUISquareLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                     android:layout_marginTop="@dimen/margin_10"
                     android:text="根据内容高度确定" />
 
-                <xyz.wbsite.wbsiteui.base.ui.layout.WBUISquareLayout
+                <xyz.wbsite.wbui.base.ui.layout.WBUISquareLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/colorAccent">
@@ -99,7 +99,7 @@
                         android:layout_height="80dp"
                         android:background="@color/app_color_theme_6" />
 
-                </xyz.wbsite.wbsiteui.base.ui.layout.WBUISquareLayout>
+                </xyz.wbsite.wbui.base.ui.layout.WBUISquareLayout>
             </LinearLayout>
         </ScrollView>
 

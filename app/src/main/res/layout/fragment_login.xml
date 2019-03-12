@@ -45,7 +45,7 @@
                 android:background="@drawable/ui_background_login"
                 android:orientation="horizontal">
 
-                <xyz.wbsite.wbsiteui.base.ui.image.WBUISquareImageView
+                <xyz.wbsite.wbui.base.ui.image.WBUISquareImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/padding_10"
@@ -79,7 +79,7 @@
                 android:background="@drawable/ui_background_login"
                 android:orientation="horizontal">
 
-                <xyz.wbsite.wbsiteui.base.ui.image.WBUISquareImageView
+                <xyz.wbsite.wbui.base.ui.image.WBUISquareImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/padding_10"

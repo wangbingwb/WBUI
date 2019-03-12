@@ -12,7 +12,7 @@
         app:qmui_topbar_separator_color="@color/colorGray_10"
         app:qmui_topbar_separator_height="0dp" />
 
-    <xyz.wbsite.wbsiteui.base.ui.WBUIGridView
+    <xyz.wbsite.wbui.base.ui.WBUIGridView
         android:id="@+id/gridMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

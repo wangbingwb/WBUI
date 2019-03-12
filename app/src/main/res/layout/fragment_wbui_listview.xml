@@ -19,7 +19,7 @@
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:fitsSystemWindows="true">
 
-        <xyz.wbsite.wbsiteui.base.ui.layout.WBUIPaternalLayout
+        <xyz.wbsite.wbui.base.ui.layout.WBUIPaternalLayout
             android:id="@+id/paternalLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -48,7 +48,7 @@
                         android:layout_height="wrap_content" />
                 </LinearLayout>
             </ScrollView>
-        </xyz.wbsite.wbsiteui.base.ui.layout.WBUIPaternalLayout>
+        </xyz.wbsite.wbui.base.ui.layout.WBUIPaternalLayout>
     </FrameLayout>
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

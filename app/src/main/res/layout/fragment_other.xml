@@ -23,15 +23,15 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <xyz.wbsite.wbsiteui.base.ui.other.LoadingProgressBar
+            <xyz.wbsite.wbui.base.ui.other.LoadingProgressBar
                 android:layout_width="100dp"
                 android:layout_height="100dp" />
 
-            <xyz.wbsite.wbsiteui.base.ui.other.LoadingView
+            <xyz.wbsite.wbui.base.ui.other.LoadingView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <xyz.wbsite.wbsiteui.base.ui.other.LoadingView1
+            <xyz.wbsite.wbui.base.ui.other.LoadingView1
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

@@ -5,7 +5,7 @@
     android:gravity="center"
     android:orientation="horizontal">
 
-    <xyz.wbsite.wbsiteui.base.ui.other.LoadingProgressBar
+    <xyz.wbsite.wbui.base.ui.other.LoadingProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
