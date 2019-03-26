@@ -57,4 +57,12 @@ public abstract class BaseSPAActivity extends QMUIFragmentActivity {
             }
         }
     }
+
+    private void startFirstFragment(BaseSPAFragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(getContextViewId(), fragment, fragment.getClass().getSimpleName())
+                .addToBackStack(fragment.getClass().getSimpleName())
+                .commit();
+    }
 }
